@@ -3,13 +3,21 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./Home";
 import Storage from "./Storage";
+import Product from "./Product";
+import Sell from "./Sell";
+import Company from "./Company";
+import Config from "./Config";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="/Storage" element={<Storage />} />
+                <Route path="/storage" element={<Storage />} />
+                <Route path="/product" element={<Product />} />
+                <Route path="/sell" element={<Sell />} />
+                <Route path="/company" element={<Company />} />
+                <Route path="/config" element={<Config />} />
             </Route>
         </Routes>
     </BrowserRouter>

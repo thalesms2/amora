@@ -1,46 +1,50 @@
 import React from "react";
-import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import {
+    TextField,
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+} from "@mui/material";
 import api from "../lib/api";
 
-interface LoginProps {
+interface SignProps {
     open: String;
     setLogin: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Login: React.FC<LoginProps> = (props) => {
-    const [id, setId] = React.useState<String>('');
-    const [password, setPassword] = React.useState<String>('');
-    const open = props.open == 'login'
-
+const Sign: React.FC<SignProps> = (props) => {
+    const [name, setName] = React.useState<String>("");
+    const [password, setPassword] = React.useState<String>("");
+    const open = props.open == "sign";
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        api.post("/user", {
-            id: Number(id),
+        api.post("/user/create", {
+            name: name,
             password: password,
         }).then((response) => {
-            if (response.data.login) {
-                window.sessionStorage.setItem("userId", response.data.id);
-                window.sessionStorage.setItem("name", response.data.name);
-                window.sessionStorage.setItem("login", response.data.login);
-                props.setLogin('logged');
+            if (response.data.sucess) {
+                props.setLogin("login");
             } else {
                 console.log(response);
             }
         });
     };
-    const handleSign = () => {
-        props.setLogin('sign')
-    }
+    const handleLogin = () => {
+        props.setLogin("login");
+    };
+
     return (
         <Dialog open={open}>
-            <DialogTitle>Login</DialogTitle>
+            <DialogTitle>Sign In</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus
                     margin="dense"
-                    value={id}
-                    onChange={(e) => setId(String(e.target.value))}
-                    label="ID"
+                    value={name}
+                    onChange={(e) => setName(String(e.target.value))}
+                    label="Name"
                     type="text"
                     fullWidth
                     variant="standard"
@@ -56,11 +60,11 @@ const Login: React.FC<LoginProps> = (props) => {
                 />
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>
-                <Button onClick={handleSign}>Sign In</Button>
-                <Button onClick={handleSubmit}>Log In</Button>
+                <Button onClick={handleLogin}>Login</Button>
+                <Button onClick={handleSubmit}>Sign In</Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-export default Login;
+export default Sign;

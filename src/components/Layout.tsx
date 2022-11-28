@@ -1,47 +1,125 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
-import { useCookies } from 'react-cookie'
+import { Outlet } from "react-router-dom";
+import {
+    IconButton,
+    Button,
+    Typography,
+    Box,
+    Paper,
+} from "@mui/material";
+import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 import { GlobalStyles } from "../styles/globalstyles";
-import { light, dark } from '../styles/Themes'
 import Login from "./Login";
+import Nav from "./Nav";
+import Sign from "./Sign";
 
-const Layout: React.FC = () => {
-    const [cookies, setCookie, removeCookie] = useCookies()
-    const [theme, setTheme] = React.useState(() => {
-        if(cookies.theme) {
-            const isDarkMode = cookies.theme == 'dark'
-            return isDarkMode ? dark : light 
-        } else {
-            const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-            return isDarkMode ? dark : light 
-        }
-    })
-    const [isLogIn, setLogin] = React.useState(() => {
-        return cookies.log == 'true'
-    })
-    const toggleTheme = () => {
-        document.body.style.transition = "linear .2s";
-        if(theme === light) {
-            setTheme(dark)
-            setCookie('theme', 'dark')
-        } else {
-            setTheme(light)
-            setCookie('theme', 'light')
-        } 
-    }
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
+const ThemeButton = () => {
+    const theme = useTheme();
+    const colorMode = React.useContext(ColorModeContext);
     return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            <nav>
-                <Link to="/">Home</Link>
-                <Link to="/storage">Storage</Link>
-            </nav>
-            <button onClick={toggleTheme}>Theme</button>
-            { !isLogIn ? <Login /> : ''}
-            <Outlet />
-        </ThemeProvider>
+        <IconButton
+            onClick={colorMode.toggleColorMode}
+            color="inherit"
+            sx={{
+                padding: 0,
+                margin: 0,
+            }}
+        >
+            {theme.palette.mode === "dark" ? (
+                <DarkModeIcon />
+            ) : (
+                <LightModeIcon />
+            )}
+        </IconButton>
     );
 };
+
+const Layout: React.FC = () => {
+    const [mode, setMode] = React.useState<"light" | "dark">("light");
+    const colorMode = React.useMemo(
+        () => ({
+            toggleColorMode: () => {
+                setMode((prevMode) =>
+                    prevMode === "light" ? "dark" : "light"
+                );
+            },
+        }),
+        []
+    );
+    const theme = React.useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode,
+                },
+            }),
+        [mode]
+    );
+
+    const [login, setLogin] = React.useState(() => {
+        const result = window.sessionStorage.getItem("userId")
+            ? "logged"
+            : "login";
+        console.log(result);
+        return result;
+    });
+    const setLogout = () => {
+        setLogin("login");
+        window.sessionStorage.clear();
+    };
+    return (
+        <ColorModeContext.Provider value={colorMode}>
+            <GlobalStyles />
+            <ThemeProvider theme={theme}>
+                <Paper
+                    elevation={0}
+                    sx={{
+                        margin: 0,
+                        height: "100vh",
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        width: "100vw",
+                        borderRadius: 0,
+                        transition: ".4s ease-out",
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            paddingTop: ".5em",
+                        }}
+                    >
+                        <Nav />
+                        <Box>
+                            {login == "logged" ? (
+                                <Typography variant="overline">
+                                    {window.sessionStorage.name}
+                                </Typography>
+                            ) : (
+                                ""
+                            )}
+                            {login == "logged" ? (
+                                <Button onClick={setLogout}>logout</Button>
+                            ) : (
+                                ""
+                            )}
+                            <ThemeButton />
+                        </Box>
+                    </Box>
+                    <Login open={login} setLogin={setLogin} />
+                    <Sign open={login} setLogin={setLogin} />
+                    <Outlet />
+                </Paper>
+            </ThemeProvider>
+        </ColorModeContext.Provider>
+    );
+};
+
 export default Layout;
