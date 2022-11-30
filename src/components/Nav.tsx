@@ -144,7 +144,7 @@ return(
                 </MenuItem>
             </Link>
         </Menu>
-        
+
         <Button
             aria-controls={
                 Boolean(sell) ? "basic-menu" : undefined
@@ -223,7 +223,7 @@ return(
                     Company
                 </MenuItem>
             </Link>
-            <Link to="/company">
+            <Link to="/company/log">
                 <MenuItem 
                     onClick={handleCompanyClose}
                     divider
@@ -231,7 +231,7 @@ return(
                         color: theme.palette.text.primary
                     }}
                 >
-                    Company
+                    Log
                 </MenuItem>
             </Link>
         </Menu>
