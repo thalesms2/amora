@@ -57,47 +57,6 @@ return(
 
         <Button
             aria-controls={
-                Boolean(storage) ? "basic-menu" : undefined
-            }
-            aria-haspopup="true"
-            aria-expanded={
-                Boolean(storage) ? "true" : undefined
-            }
-            onClick={handleStorageClick}
-        >
-            Storage
-        </Button>
-        <Menu
-            id="basic-menu"
-            anchorEl={storage}
-            open={Boolean(storage)}
-            onClose={handleStorageClose}
-            MenuListProps={{
-                "aria-labelledby": "basic-button",
-            }}
-        >
-            <Link to="/">
-                <MenuItem 
-                    onClick={handleStorageClose}
-                    divider
-                    sx={{
-                        color: theme.palette.text.primary
-                    }}
-                >
-                    Profile
-                </MenuItem>
-            </Link>
-            <MenuItem divider onClick={handleStorageClose}>
-                My account
-            </MenuItem>
-            <MenuItem divider onClick={handleStorageClose}>
-                Logout
-            </MenuItem>
-        </Menu>
-
-        
-        <Button
-            aria-controls={
                 Boolean(product) ? "basic-menu" : undefined
             }
             aria-haspopup="true"
@@ -117,26 +76,75 @@ return(
                 "aria-labelledby": "basic-button",
             }}
         >
-            <Link to="/">
+        <Link to="/product">
+            <MenuItem 
+                onClick={handleProductClose}
+                divider
+                sx={{
+                    color: theme.palette.text.primary
+                }}
+            >
+                Consult all products
+            </MenuItem>
+        </Link>
+        <Link to="/product/create">
+            <MenuItem 
+                onClick={handleProductClose}
+                divider
+                sx={{
+                    color: theme.palette.text.primary
+                }}
+            >
+                Create new product
+            </MenuItem>
+        </Link>
+        </Menu>
+
+        <Button
+            aria-controls={
+                Boolean(storage) ? "basic-menu" : undefined
+            }
+            aria-haspopup="true"
+            aria-expanded={
+                Boolean(storage) ? "true" : undefined
+            }
+            onClick={handleStorageClick}
+        >
+            Storage
+        </Button>
+        <Menu
+            id="basic-menu"
+            anchorEl={storage}
+            open={Boolean(storage)}
+            onClose={handleStorageClose}
+            MenuListProps={{
+                "aria-labelledby": "basic-button",
+            }}
+        >
+            <Link to="/storage">
                 <MenuItem 
-                    onClick={handleProductClose}
+                    onClick={handleStorageClose}
                     divider
                     sx={{
                         color: theme.palette.text.primary
                     }}
                 >
-                    Profile
+                    Consult
                 </MenuItem>
             </Link>
-            <MenuItem divider onClick={handleProductClose}>
-                My account
-            </MenuItem>
-            <MenuItem divider onClick={handleProductClose}>
-                Logout
-            </MenuItem>
+            <Link to="/storage">
+                <MenuItem 
+                    onClick={handleStorageClose}
+                    divider
+                    sx={{
+                        color: theme.palette.text.primary
+                    }}
+                >
+                    Create
+                </MenuItem>
+            </Link>
         </Menu>
-
-
+        
         <Button
             aria-controls={
                 Boolean(sell) ? "basic-menu" : undefined
@@ -158,7 +166,7 @@ return(
                 "aria-labelledby": "basic-button",
             }}
         >
-            <Link to="/">
+            <Link to="/sell">
                 <MenuItem 
                     onClick={handleSellClose}
                     divider
@@ -166,15 +174,20 @@ return(
                         color: theme.palette.text.primary
                     }}
                 >
-                    Profile
+                    Sells
                 </MenuItem>
             </Link>
-            <MenuItem divider onClick={handleSellClose}>
-                My account
-            </MenuItem>
-            <MenuItem divider onClick={handleSellClose}>
-                Logout
-            </MenuItem>
+            <Link to="/sell">
+                <MenuItem 
+                    onClick={handleSellClose}
+                    divider
+                    sx={{
+                        color: theme.palette.text.primary
+                    }}
+                >
+                    Sells
+                </MenuItem>
+            </Link>
         </Menu>
 
 
@@ -199,7 +212,7 @@ return(
                 "aria-labelledby": "basic-button",
             }}
         >
-            <Link to="/">
+            <Link to="/company">
                 <MenuItem 
                     onClick={handleCompanyClose}
                     divider
@@ -207,15 +220,20 @@ return(
                         color: theme.palette.text.primary
                     }}
                 >
-                    Profile
+                    Company
                 </MenuItem>
             </Link>
-            <MenuItem divider onClick={handleCompanyClose}>
-                My account
-            </MenuItem>
-            <MenuItem divider onClick={handleCompanyClose}>
-                Logout
-            </MenuItem>
+            <Link to="/company">
+                <MenuItem 
+                    onClick={handleCompanyClose}
+                    divider
+                    sx={{
+                        color: theme.palette.text.primary
+                    }}
+                >
+                    Company
+                </MenuItem>
+            </Link>
         </Menu>
 
 
@@ -240,7 +258,7 @@ return(
                 "aria-labelledby": "basic-button",
             }}
         >
-            <Link to="/">
+            <Link to="/config">
                 <MenuItem 
                     onClick={handleConfigClose}
                     divider
@@ -248,15 +266,20 @@ return(
                         color: theme.palette.text.primary
                     }}
                 >
-                    Profile
+                    Config
                 </MenuItem>
             </Link>
-            <MenuItem divider onClick={handleConfigClose}>
-                My account
-            </MenuItem>
-            <MenuItem divider onClick={handleConfigClose}>
-                Logout
-            </MenuItem>
+            <Link to="/config">
+                <MenuItem 
+                    onClick={handleConfigClose}
+                    divider
+                    sx={{
+                        color: theme.palette.text.primary
+                    }}
+                >
+                    Config
+                </MenuItem>
+            </Link>
         </Menu>
     </Box>
     )

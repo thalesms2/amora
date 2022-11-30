@@ -7,6 +7,7 @@ import Product from "./Product";
 import Sell from "./Sell";
 import Company from "./Company";
 import Config from "./Config";
+import ProductCreate from "./ProductCreate";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 <Route index element={<Home />} />
                 <Route path="/storage" element={<Storage />} />
                 <Route path="/product" element={<Product />} />
+                <Route path="/product/create" element={<ProductCreate />} />
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/company" element={<Company />} />
                 <Route path="/config" element={<Config />} />

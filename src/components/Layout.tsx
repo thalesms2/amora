@@ -88,6 +88,7 @@ const Layout: React.FC = () => {
                         transition: ".4s ease-out",
                     }}
                 >
+                    
                     <Box
                         sx={{
                             display: "flex",
@@ -113,6 +114,7 @@ const Layout: React.FC = () => {
                             <ThemeButton />
                         </Box>
                     </Box>
+
                     <Login open={login} setLogin={setLogin} />
                     <Sign open={login} setLogin={setLogin} />
                     <Outlet />
