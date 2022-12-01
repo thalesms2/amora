@@ -8,6 +8,7 @@ import {
     Paper,
 } from "@mui/material";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
+import { ToastContainer, Flip } from 'react-toastify'
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
@@ -76,6 +77,12 @@ const Layout: React.FC = () => {
         <ColorModeContext.Provider value={colorMode}>
             <GlobalStyles />
             <ThemeProvider theme={theme}>
+            <ToastContainer
+                theme={mode == 'dark' ? 'light' : 'dark'}
+                position="bottom-right"
+                transition={Flip}
+                autoClose={5000}
+            />
                 <Paper
                     elevation={0}
                     sx={{

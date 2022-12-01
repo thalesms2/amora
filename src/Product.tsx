@@ -9,6 +9,7 @@ import {
     TableCell,
     TablePagination
 } from "@mui/material";
+import { toast } from 'react-toastify'
 import React from "react";
 import api from "./lib/api";
 
@@ -53,7 +54,14 @@ const Product: React.FC = () => {
     React.useEffect(() => {
         async function getProducts() {
             try {
-                const { data } = await api.get("/product");
+                const { data } = await toast.promise(
+                    api.get("/product"),
+                    {
+                        pending: "Promise is pending",
+                        success: "Promise resolved 👌",
+                        error: "Promise rejected 🤯",
+                    }
+                ) 
                 setProducts(data);
             } catch (err) {
                 alert("Ocorreu um erro ao buscar os produtos");

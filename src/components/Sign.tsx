@@ -7,6 +7,7 @@ import {
     DialogContent,
     DialogActions,
 } from "@mui/material";
+import { toast, Flip } from 'react-toastify'
 import api from "../lib/api";
 
 interface SignProps {
@@ -20,16 +21,23 @@ const Sign: React.FC<SignProps> = (props) => {
     const open = props.open == "sign";
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        api.post("/user/create", {
-            name: name,
-            password: password,
-        }).then((response) => {
-            if (response.data.sucess) {
-                props.setLogin("login");
-            } else {
-                console.log(response);
+        const response = await toast.promise(
+            api.post("/user/create", {
+                name: name,
+                password: password,
+            }),
+            {
+                pending: "Promise is pending",
+                success: "Promise resolved 👌",
+                error: "Promise rejected 🤯",
             }
-        });
+        )
+        if (response.data.sucess) {
+            toast(`💾 Signed up Id - ${response.data.create.id}`)
+            props.setLogin("login");
+        } else {
+            toast('⚠️Error')
+        }
     };
     const handleLogin = () => {
         props.setLogin("login");

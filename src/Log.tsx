@@ -10,6 +10,7 @@ import {
     TablePagination,
     TableRow,
 } from "@mui/material";
+import { toast } from 'react-toastify'
 import api from "./lib/api";
 
 interface Column {
@@ -61,7 +62,14 @@ const Log: React.FC = () => {
     React.useEffect(() => {
         async function getAllLogs() {
             try {
-                const { data } = await api.get("/log");
+                const { data } = await toast.promise(
+                    api.get("/log"),
+                    {
+                        pending: "Promise is pending",
+                        success: "Promise resolved 👌",
+                        error: "Promise rejected 🤯",
+                    }
+                ) 
                 console.log(data);
                 setLogs(data);
             } catch (err) {
