@@ -1,20 +1,45 @@
 import React from "react";
 import {
-    List,
-    ListSubheader,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Collapse,
+    Paper,
+    Typography,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
 import api from "./lib/api";
 
+interface Column {
+    id: "id" | "type" | "description" | "user" | "createdAt";
+    label: string;
+    minWidth?: number;
+    align?: "right" | "center";
+    format?: (value: number) => string;
+}
+
+const columns: readonly Column[] = [
+    { id: "id", label: "Id", minWidth: 170 },
+    { id: "type", label: "Type", minWidth: 100 },
+    {
+        id: "description",
+        label: "Description",
+        minWidth: 170,
+    },
+    {
+        id: "user",
+        label: "User",
+        minWidth: 170,
+    },
+    {
+        id: "createdAt",
+        label: "Created At",
+        minWidth: 170,
+        format: (value: number) => value.toFixed(2),
+    },
+];
 interface Log {
     id: number;
     type: "CREATE" | "EDIT" | "DELETE" | "LOGIN";
@@ -33,13 +58,11 @@ const Log: React.FC = () => {
     const [users, setUsers] = React.useState<User[]>([]);
     const [open, setOpen] = React.useState(true);
 
-    const handleClick = () => {
-        setOpen(!open);
-    };
     React.useEffect(() => {
         async function getAllLogs() {
             try {
                 const { data } = await api.get("/log");
+                console.log(data);
                 setLogs(data);
             } catch (err) {
                 alert("Houve um erro ao consultar logs");
@@ -47,47 +70,86 @@ const Log: React.FC = () => {
         }
         getAllLogs();
     }, []);
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
     return (
-        <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-            subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
-                    Nested List Items
-                </ListSubheader>
-            }
-        >
-            <ListItemButton>
-                <ListItemIcon>
-                    <SendIcon />
-                </ListItemIcon>
-                <ListItemText primary="Sent mail" />
-            </ListItemButton>
-            <ListItemButton>
-                <ListItemIcon>
-                    <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Drafts" />
-            </ListItemButton>
-            <ListItemButton onClick={handleClick}>
-                <ListItemIcon>
-                    <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Inbox" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                            <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary="Starred" />
-                    </ListItemButton>
-                </List>
-            </Collapse>
-        </List>
+        <Paper sx={{
+            padding: "1em",
+            margin: "1em",
+        }}>
+            <TableContainer sx={{
+                maxHeight: "75vh",
+            }}>
+                <Typography variant="h3">Logs</Typography>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                        <TableRow>
+                            {columns.map((column) => (
+                                <TableCell
+                                    key={column.id}
+                                    align={column.align}
+                                    style={{ minWidth: column.minWidth }}
+                                >
+                                    {column.label}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {logs
+                            .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage
+                            )
+                            .map((log) => {
+                                return (
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        tabIndex={-1}
+                                        key={log.id}
+                                    >
+                                        {columns.map((column) => {
+                                            const value = log[column.id];
+                                            return (
+                                                <TableCell
+                                                    key={column.id}
+                                                    align={column.align}
+                                                >
+                                                    {column.format &&
+                                                    typeof value === "number"
+                                                        ? column.format(value)
+                                                        : value}
+                                                </TableCell>
+                                            );
+                                        })}
+                                    </TableRow>
+                                );
+                            })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[15, 30, 100]}
+                component="div"
+                count={logs.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </Paper>
     );
 };
 

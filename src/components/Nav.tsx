@@ -212,7 +212,7 @@ return(
                 "aria-labelledby": "basic-button",
             }}
         >
-            <Link to="/company">
+            <Link to="/company/log">
                 <MenuItem 
                     onClick={handleCompanyClose}
                     divider
@@ -220,7 +220,7 @@ return(
                         color: theme.palette.text.primary
                     }}
                 >
-                    Company
+                    Log
                 </MenuItem>
             </Link>
             <Link to="/company">

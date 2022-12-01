@@ -1,6 +1,5 @@
 import {
-    Container,
-    Box,
+    Paper,
     Typography,
     TableBody,
     TableContainer,
@@ -63,62 +62,67 @@ const Product: React.FC = () => {
         getProducts();
     }, []);
     return (
-        <TableContainer sx={{}}>
-            <Typography variant="h3">Products</Typography>
-            <Table stickyHeader aria-label="stycky table">
-                <TableHead>
-                    <TableRow>
-                        {columns.map((column) => (
-                            <TableCell
-                                key={column.id}
-                                align={column.align}
-                                style={{ minWidth: column.minWidth }}
-                            >
-                                {column.label}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {products
-                        .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                        )
-                        .map((product) => {
-                            return (
-                                <TableRow
-                                    hover
-                                    role="checkbox"
-                                    tabIndex={-1}
-                                    key={product.id}
+        <Paper sx={{ 
+            padding: "1em",
+            margin: "1em",
+        }}>
+            <TableContainer sx={{}}>
+                <Typography variant="h3">Products</Typography>
+                <Table stickyHeader aria-label="stycky table">
+                    <TableHead>
+                        <TableRow>
+                            {columns.map((column) => (
+                                <TableCell
+                                    key={column.id}
+                                    align={column.align}
+                                    style={{ minWidth: column.minWidth }}
                                 >
-                                    {columns.map((column) => {
-                                        const value = product[column.id];
-                                        return (
-                                            <TableCell
-                                                key={column.id}
-                                                align={column.align}
-                                            >
-                                                {value}
-                                            </TableCell>
-                                        );
-                                    })}
-                                </TableRow>
-                            );
-                        })}
-                </TableBody>
-            </Table>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={products.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-        </TableContainer>
+                                    {column.label}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {products
+                            .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage
+                            )
+                            .map((product) => {
+                                return (
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        tabIndex={-1}
+                                        key={product.id}
+                                    >
+                                        {columns.map((column) => {
+                                            const value = product[column.id];
+                                            return (
+                                                <TableCell
+                                                    key={column.id}
+                                                    align={column.align}
+                                                >
+                                                    {value}
+                                                </TableCell>
+                                            );
+                                        })}
+                                    </TableRow>
+                                );
+                            })}
+                    </TableBody>
+                </Table>
+                <TablePagination
+                    rowsPerPageOptions={[15, 30, 100]}
+                    component="div"
+                    count={products.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </TableContainer>
+        </Paper>
     );
 };
 

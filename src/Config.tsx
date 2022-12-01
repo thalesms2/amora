@@ -5,7 +5,7 @@ import api from "./lib/api";
 const Config: React.FC = () => {
     const clearLogs = async () => {
         try {
-            await api.delete("/log/all", {});
+            await api.delete("/log/all");
             alert('Logs excluidos com sucesso!')
         } catch (err) {
             alert("Houve um erro ao tentar conectar a API");
