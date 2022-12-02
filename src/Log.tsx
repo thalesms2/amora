@@ -99,7 +99,12 @@ const Log: React.FC = () => {
             <TableContainer sx={{
                 maxHeight: "75vh",
             }}>
-                <Typography variant="h3">Logs</Typography>
+                <Typography 
+                    variant="h3"
+                    sx={{
+                        marginBotton: '.5em',
+                    }}
+                >Logs</Typography>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>

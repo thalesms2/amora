@@ -6,7 +6,10 @@ import {
     Typography,
     Box,
     Paper,
+    useMediaQuery,
+    Tooltip
 } from "@mui/material";
+import { useCookies } from 'react-cookie'
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import { ToastContainer, Flip } from 'react-toastify'
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -23,30 +26,45 @@ const ThemeButton = () => {
     const theme = useTheme();
     const colorMode = React.useContext(ColorModeContext);
     return (
-        <IconButton
-            onClick={colorMode.toggleColorMode}
-            color="inherit"
-            sx={{
-                padding: 0,
-                margin: 0,
-            }}
-        >
-            {theme.palette.mode === "dark" ? (
-                <DarkModeIcon />
-            ) : (
-                <LightModeIcon />
-            )}
-        </IconButton>
+        <Tooltip title="Change theme">
+            <IconButton
+                onClick={colorMode.toggleColorMode}
+                color="inherit"
+                sx={{
+                    padding: ".5em",
+                    marginLeft: ".5em",
+                }}
+            >
+                {theme.palette.mode === "dark" ? (
+                    <DarkModeIcon />
+                ) : (
+                    <LightModeIcon />
+                )}
+            </IconButton>
+        </Tooltip>
     );
 };
 
 const Layout: React.FC = () => {
-    const [mode, setMode] = React.useState<"light" | "dark">("light");
+    const [cookies, setCookie, removeCookie] = useCookies(['theme']);
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const [mode, setMode] = React.useState<"light" | "dark">(() => {
+        if (cookies.theme === 'dark' || cookies.theme === 'light') {
+            return cookies.theme
+        } else {
+            const theme = prefersDarkMode ? 'dark' : 'light'
+            setCookie('theme', theme)
+            return theme
+        }
+    });
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
-                setMode((prevMode) =>
-                    prevMode === "light" ? "dark" : "light"
+                setMode((prevMode) => {
+                    const newTheme = prevMode === "light" ? "dark" : "light"
+                    setCookie('theme', newTheme)
+                    return newTheme
+                }
                 );
             },
         }),
@@ -114,7 +132,15 @@ const Layout: React.FC = () => {
                                 ""
                             )}
                             {login == "logged" ? (
-                                <Button onClick={setLogout}>logout</Button>
+                                <Tooltip title="Logout">
+                                    <Button 
+                                        onClick={setLogout}
+                                        sx={{
+                                            padding: "1em 1.5em",
+                                            marginLeft: ".5em",
+                                        }}
+                                    >Logout</Button>
+                                </Tooltip>
                             ) : (
                                 ""
                             )}

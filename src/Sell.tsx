@@ -1,10 +1,18 @@
 import React from 'react'
+import { Typography } from '@mui/material'
 
 const Sell: React.FC = () => {
 
     return (
         <div>
-            sell
+            <Typography
+                variant="h3"
+                sx={{
+                    marginBottom: ".5 em",
+                }}
+            >
+            Sell
+            </Typography>
         </div>
     )
 }

@@ -75,7 +75,12 @@ const Product: React.FC = () => {
             margin: "1em",
         }}>
             <TableContainer sx={{}}>
-                <Typography variant="h3">Products</Typography>
+                <Typography 
+                    variant="h3"
+                    sx={{
+                        marginBotton: '.5em',
+                    }}
+                >Products</Typography>
                 <Table stickyHeader aria-label="stycky table">
                     <TableHead>
                         <TableRow>

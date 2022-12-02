@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material/styles";
 const Nav = () => {
     const theme = useTheme();
     
+    const [shop, setShop] = React.useState<null | HTMLElement>(null);
     const [sell, setSell] = React.useState<null | HTMLElement>(null);
     const [storage, setStorage] = React.useState<null | HTMLElement>(null);
     const [product, setProduct] = React.useState<null | HTMLElement>(null);
@@ -27,6 +28,9 @@ const Nav = () => {
     const handleSellClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setSell(event.currentTarget);
     };
+    const handleShopClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setShop(event.currentTarget);
+    };
 
     const handleStorageClose = () => {
         setStorage(null);
@@ -43,6 +47,9 @@ const Nav = () => {
     const handleSellClose = () => {
         setSell(null);
     };
+    const handleShopClose = () => {
+        setShop(null);
+    };
     
 return(
     <Box sx={{
@@ -52,7 +59,10 @@ return(
         alignItems: "space-between"
     }}>
         <Link to="/">
-            <Button>Home</Button>
+            <Button sx={{
+                padding: "1em 1.5em",
+                marginRight: ".5em",
+            }}>Home</Button>
         </Link>
 
         <Button
@@ -64,6 +74,10 @@ return(
                 Boolean(product) ? "true" : undefined
             }
             onClick={handleProductClick}
+            sx={{
+                padding: ".5em 1em",
+                marginRight: ".5em",
+            }}
         >
             Product
         </Button>
@@ -75,13 +89,16 @@ return(
             MenuListProps={{
                 "aria-labelledby": "basic-button",
             }}
+            sx={{
+                marginRight: ".5em",
+            }}
         >
         <Link to="/product">
             <MenuItem 
                 onClick={handleProductClose}
                 divider
                 sx={{
-                    color: theme.palette.text.primary
+                    color: theme.palette.text.primary,
                 }}
             >
                 Consult all products
@@ -109,6 +126,9 @@ return(
                 Boolean(storage) ? "true" : undefined
             }
             onClick={handleStorageClick}
+            sx={{
+                marginRight: ".5em",
+            }}
         >
             Storage
         </Button>
@@ -154,6 +174,9 @@ return(
                 Boolean(sell) ? "true" : undefined
             }
             onClick={handleSellClick}
+            sx={{
+                marginRight: ".5em",
+            }}
         >
             Sell
         </Button>
@@ -189,6 +212,53 @@ return(
                 </MenuItem>
             </Link>
         </Menu>
+        <Button
+            aria-controls={
+                Boolean(shop) ? "basic-menu" : undefined
+            }
+            aria-haspopup="true"
+            aria-expanded={
+                Boolean(shop) ? "true" : undefined
+            }
+            onClick={handleShopClick}
+            sx={{
+                marginRight: ".5em",
+            }}
+        >
+            Shop
+        </Button>
+        <Menu
+            id="basic-menu"
+            anchorEl={shop}
+            open={Boolean(shop)}
+            onClose={handleShopClose}
+            MenuListProps={{
+                "aria-labelledby": "basic-button",
+            }}
+        >
+            <Link to="/shop">
+                <MenuItem 
+                    onClick={handleSellClose}
+                    divider
+                    sx={{
+                        color: theme.palette.text.primary
+                    }}
+                >
+                    Shop
+                </MenuItem>
+            </Link>
+            <Link to="/shop">
+                <MenuItem 
+                    onClick={handleSellClose}
+                    divider
+                    sx={{
+                        color: theme.palette.text.primary
+                    }}
+                >
+                    Shop
+                </MenuItem>
+            </Link>
+        </Menu>
 
 
         <Button
@@ -200,6 +270,9 @@ return(
                 Boolean(company) ? "true" : undefined
             }
             onClick={handleCompanyClick}
+            sx={{
+                marginRight: ".5em",
+            }}
         >
             Company
         </Button>
@@ -223,7 +296,7 @@ return(
                     Log
                 </MenuItem>
             </Link>
-            <Link to="/company/log">
+            <Link to="/company/user">
                 <MenuItem 
                     onClick={handleCompanyClose}
                     divider
@@ -231,7 +304,7 @@ return(
                         color: theme.palette.text.primary
                     }}
                 >
-                    Log
+                    User
                 </MenuItem>
             </Link>
         </Menu>
@@ -246,6 +319,9 @@ return(
                 Boolean(config) ? "true" : undefined
             }
             onClick={handleConfigClick}
+            sx={{
+                marginRight: ".5em",
+            }}
         >
             Config
         </Button>

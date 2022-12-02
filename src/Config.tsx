@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Paper, Button } from '@mui/material'
-import { ToastContainer, toast, Flip } from 'react-toastify'
+import { Box, Paper, Button, Typography } from '@mui/material'
+import { toast } from 'react-toastify'
 import api from "./lib/api";
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,25 +8,44 @@ import 'react-toastify/dist/ReactToastify.css';
 const Config: React.FC = () => {
     const clearLogs = async () => {
         try {
-            await api.delete("/log/all");
-            alert('Logs excluidos com sucesso!')
+            toast.promise(api.delete("/log/all"), 
+            {
+                pending: "Promise is pending",
+                success: "Promise resolved 👌",
+                error: "Promise rejected 🤯",
+            })
+            toast('♻️All logs deleted')
         } catch (err) {
-            alert("Houve um erro ao tentar conectar a API");
+            toast('⚠️Error')
         }
     };
     return (
-        <Box>
-            <Button onClick={clearLogs}>Clear Logs</Button>
-            <Button onClick={() => toast('🦄 toast!', {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                transition: Flip,
-            })}>Toast</Button>
+        <Box
+            sx={{
+                
+            }}
+        >
+            <Typography
+                variant="h3"
+                sx={{
+                    marginBottom: ".5em",
+                }}
+            >
+                Configs
+            </Typography>
+            <Button 
+                onClick={clearLogs}
+                sx={{
+                    padding: ".5em 1em",
+                    marginRight: ".5em",
+                }}
+            >Clear Logs</Button>
+            <Button 
+                onClick={() => toast('🦄 toast!')}
+                sx={{
+                    padding: ".5em 1em",
+                }}
+            >Testing Toast Totification</Button>
         </Box>
     ) 
 };

@@ -37,26 +37,10 @@ const Login: React.FC<LoginProps> = (props) => {
             window.sessionStorage.setItem("userId", response.data.id);
             window.sessionStorage.setItem("name", response.data.name);
             window.sessionStorage.setItem("login", response.data.login);
-            toast("🦄 Logged!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            toast("🦄 Logged!");
             props.setLogin("logged");
         } else {
-            toast("🦄 Deu ruim!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            toast("🦄 Deu ruim!");
         }
     };
     const handleSign = () => {
