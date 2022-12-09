@@ -16,6 +16,7 @@ import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import { toast } from "react-toastify";
 
 import api from "./lib/api";
+import UserEdit from './components/UserEdit'
 
 interface User {
     id: number
@@ -24,27 +25,45 @@ interface User {
 
 const User: React.FC = () => {
     const [users, setUsers] = React.useState<User[]>([])
+    const [edit, setEdit] = React.useState<'open' | 'closed'>('closed')
+    const [userEdited, setUserEdited] = React.useState<Number>(0)
+    const getAllUsers = async () => {
+        try {
+            const { data } = await toast.promise(
+                api.get('/user'), 
+                {
+                    pending: "Loading 😴",
+                    success: "Loading completed 🥳",
+                    error: "Error 😦",
+                })
+            setUsers(data)
+        } catch (err) {
+            toast('Error 😦')
+        }
+    }
 
     React.useEffect(() => {
-        async function getAllUsers() {
-            try {
-                const { data } = await toast.promise(
-                    api.get('/user'), 
-                    {
-                        pending: "Loading 😴",
-                        success: "Loading completed 🥳",
-                        error: "Error 😦",
-                    })
-                setUsers(data)
-            } catch (err) {
-                toast('Error')
-            }
-        }
         getAllUsers()
     }, [])
 
-    const createAllUsers = () => {
-        
+    const delUser = async (id: number) => {
+        try {
+            const result = await toast.promise(
+                api.delete(`/user/${id}`),
+                {
+                    pending: "Loading 😴",
+                    success: "Loading completed 🥳",
+                    error: "Error 😦",
+                })
+            toast('User deleted 💀')
+            getAllUsers()
+        } catch (err) {
+            toast('Error 😦')
+        }
+    }
+    const editUser = (id: number) => {
+        setUserEdited(id)
+        setEdit('open')
     }
 
     return (
@@ -95,12 +114,17 @@ const User: React.FC = () => {
                                                 sx={{
                                                     marginRight: '.2em',
                                                 }}
+                                                onClick={() => editUser(user.id)}
                                             >
                                                 <EditRoundedIcon />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="Delete">
-                                            <IconButton edge="end" aria-label="Delete">
+                                            <IconButton 
+                                                edge="end" 
+                                                aria-label="Delete"
+                                                onClick={() => delUser(user.id)}
+                                            >
                                                 <DeleteRoundedIcon />
                                             </IconButton>
                                         </Tooltip>
@@ -119,6 +143,7 @@ const User: React.FC = () => {
                     })
                 }
             </List>
+            { edit ? <UserEdit id={userEdited} setEdit={setEdit} open={edit} getAllUsers={getAllUsers} /> : null}
         </Box>
     );
 };

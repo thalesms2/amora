@@ -126,7 +126,7 @@ const Product: React.FC = () => {
                     </TableBody>
                 </Table>
                 <TablePagination
-                    rowsPerPageOptions={[15, 30, 100]}
+                    rowsPerPageOptions={[10, 15, 30]}
                     component="div"
                     count={products.length}
                     rowsPerPage={rowsPerPage}
