@@ -7,7 +7,7 @@ import {
     DialogContent,
     DialogActions,
 } from "@mui/material";
-import { toast, Flip } from 'react-toastify'
+import { toast } from 'react-toastify'
 import api from "../lib/api";
 
 interface SignProps {
@@ -19,6 +19,13 @@ const Sign: React.FC<SignProps> = (props) => {
     const [name, setName] = React.useState<String>("");
     const [password, setPassword] = React.useState<String>("");
     const open = props.open == "sign";
+    
+    const handleKeydown = async(e: React.KeyboardEvent) => {
+        if(e.code === 'Enter' || e.code === 'NumpadEnter') {
+            handleSubmit(e)
+        }
+    }
+
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         const response = await toast.promise(
@@ -27,16 +34,16 @@ const Sign: React.FC<SignProps> = (props) => {
                 password: password,
             }),
             {
-                pending: "Promise is pending",
-                success: "Promise resolved 👌",
-                error: "Promise rejected 🤯",
+                pending: "Loading 😴",
+                success: "Loading completed 🥳",
+                error: "Error 😦",
             }
         )
         if (response.data.sucess) {
-            toast(`💾 Signed up Id - ${response.data.create.id}`)
+            toast(`Signed up Id - ${response.data.create.id} 💾`)
             props.setLogin("login");
         } else {
-            toast('⚠️Error')
+            toast('Error ⚠️')
         }
     };
     const handleLogin = () => {
@@ -56,6 +63,7 @@ const Sign: React.FC<SignProps> = (props) => {
                     type="text"
                     fullWidth
                     variant="standard"
+                    onKeyDown={handleKeydown}
                 />
                 <TextField
                     margin="dense"
@@ -65,6 +73,7 @@ const Sign: React.FC<SignProps> = (props) => {
                     type="password"
                     fullWidth
                     variant="standard"
+                    onKeyDown={handleKeydown}
                 />
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>

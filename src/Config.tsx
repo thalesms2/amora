@@ -10,9 +10,9 @@ const Config: React.FC = () => {
         try {
             toast.promise(api.delete("/log/all"), 
             {
-                pending: "Promise is pending",
-                success: "Promise resolved 👌",
-                error: "Promise rejected 🤯",
+                pending: "Loading 😴",
+                success: "Loading completed 🥳",
+                error: "Error 😦",
             })
             toast('♻️All logs deleted')
         } catch (err) {

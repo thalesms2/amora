@@ -12,6 +12,7 @@ import {
     Button,
 } from "@mui/material";
 import api from "./lib/api";
+import { toast } from "react-toastify";
 
 interface Brand {
     id: number;
@@ -57,7 +58,7 @@ const ProductCreate: React.FC = () => {
                 })
                 setBrands(res)
             } catch (err) {
-                alert('Ocorreu um erro ao tentar coletar as marcas')
+                toast('Error to get brands 😦')
             }
         }
         async function getGroups() {
@@ -73,7 +74,7 @@ const ProductCreate: React.FC = () => {
                 })
                 setGroups(res)
             } catch (err) {
-                alert('Ocorreu um erro ao tentar coletar os grupos')
+                toast('Error to get groups 😦')
             }
         }
         getBrands()
@@ -90,10 +91,9 @@ const ProductCreate: React.FC = () => {
                 brandId: brandId,
                 groupId: groupId,
             });    
-            alert('Produto criado com sucesso!')
-            console.log(response)
+            toast('Product created 🥳')
         } catch (err) {
-            alert('Ocorreu um erro ao tentar criar um novo produto')
+            toast('Error 😦')
         }
     };
     const handleClear = async () => {

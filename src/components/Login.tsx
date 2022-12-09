@@ -7,7 +7,7 @@ import {
     DialogContent,
     DialogActions,
 } from "@mui/material";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import api from "../lib/api";
 
 interface LoginProps {
@@ -20,6 +20,12 @@ const Login: React.FC<LoginProps> = (props) => {
     const [password, setPassword] = React.useState<String>("");
     const open = props.open == "login";
 
+    const handleKeydown = async(e: React.KeyboardEvent) => {
+        if(e.code === 'Enter' || e.code === 'NumpadEnter') {
+            handleSubmit(e)
+        }
+    }
+    
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         const response = await toast.promise(
@@ -28,19 +34,19 @@ const Login: React.FC<LoginProps> = (props) => {
                 password: password,
             }),
             {
-                pending: "Promise is pending",
-                success: "Promise resolved 👌",
-                error: "Promise rejected 🤯",
+                pending: "Loading 😴",
+                success: "Loading completed 🥳",
+                error: "Error 😦",
             }
         );
         if (response.data.login) {
             window.sessionStorage.setItem("userId", response.data.id);
             window.sessionStorage.setItem("name", response.data.name);
             window.sessionStorage.setItem("login", response.data.login);
-            toast("🦄 Logged!");
+            toast("Logged! 🥳");
             props.setLogin("logged");
         } else {
-            toast("🦄 Deu ruim!");
+            toast("Wrong ID or Password 🥶");
         }
     };
     const handleSign = () => {
@@ -59,6 +65,7 @@ const Login: React.FC<LoginProps> = (props) => {
                     type="text"
                     fullWidth
                     variant="standard"
+                    onKeyDown={handleKeydown}
                 />
                 <TextField
                     margin="dense"
@@ -68,11 +75,12 @@ const Login: React.FC<LoginProps> = (props) => {
                     type="password"
                     fullWidth
                     variant="standard"
+                    onKeyDown={handleKeydown}
                 />
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>
-                <Button onClick={handleSign}>Sign In</Button>
-                <Button onClick={handleSubmit}>Log In</Button>
+                <Button variant="outlined" onClick={handleSign}>Sign In</Button>
+                <Button variant="contained" type="submit" onClick={handleSubmit}>Log In</Button>
             </DialogActions>
         </Dialog>
     );

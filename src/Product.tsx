@@ -57,9 +57,9 @@ const Product: React.FC = () => {
                 const { data } = await toast.promise(
                     api.get("/product"),
                     {
-                        pending: "Promise is pending",
-                        success: "Promise resolved 👌",
-                        error: "Promise rejected 🤯",
+                        pending: "Loading 😴",
+                        success: "Loading completed 🥳",
+                        error: "Error 😦",
                     }
                 ) 
                 setProducts(data);

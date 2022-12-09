@@ -9,7 +9,6 @@ import {
     useMediaQuery,
     Tooltip
 } from "@mui/material";
-import { useCookies } from 'react-cookie'
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import { ToastContainer, Flip } from 'react-toastify'
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -46,23 +45,21 @@ const ThemeButton = () => {
 };
 
 const Layout: React.FC = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['theme']);
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const [mode, setMode] = React.useState<"light" | "dark">(() => {
-        if (cookies.theme === 'dark' || cookies.theme === 'light') {
-            return cookies.theme
-        } else {
-            const theme = prefersDarkMode ? 'dark' : 'light'
-            setCookie('theme', theme)
-            return theme
-        }
+        if (localStorage.theme === 'dark' || localStorage.theme === 'light') {
+            return localStorage.theme;
+        } 
+        const theme = prefersDarkMode ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+        return theme;
     });
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
                 setMode((prevMode) => {
                     const newTheme = prevMode === "light" ? "dark" : "light"
-                    setCookie('theme', newTheme)
+                    localStorage.setItem('theme', newTheme)
                     return newTheme
                 }
                 );

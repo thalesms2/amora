@@ -31,9 +31,9 @@ const User: React.FC = () => {
                 const { data } = await toast.promise(
                     api.get('/user'), 
                     {
-                        pending: "Promise is pending",
-                        success: "Promise resolved 👌",
-                        error: "Promise rejected 🤯",
+                        pending: "Loading 😴",
+                        success: "Loading completed 🥳",
+                        error: "Error 😦",
                     })
                 setUsers(data)
             } catch (err) {

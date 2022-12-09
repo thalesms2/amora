@@ -65,9 +65,9 @@ const Log: React.FC = () => {
                 const { data } = await toast.promise(
                     api.get("/log"),
                     {
-                        pending: "Promise is pending",
-                        success: "Promise resolved 👌",
-                        error: "Promise rejected 🤯",
+                        pending: "Loading 😴",
+                        success: "Loading completed 🥳",
+                        error: "Error 😦",
                     }
                 ) 
                 console.log(data);
