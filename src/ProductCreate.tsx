@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import api from "./lib/api";
 import { toast } from "react-toastify";
+import BrandCreate from "./components/brandCreate";
 
 interface Brand {
     id: number;
@@ -43,6 +44,7 @@ const ProductCreate: React.FC = () => {
     const [groupValue, setGroupValue] = React.useState<String>("");
     const [brandId, setBrandId] = React.useState<Number>(0);
     const [groupId, setGroupId] = React.useState<Number>(0);
+    const [create, setCreate] = React.useState<"brand" | "group" |"closed">('closed')
 
     React.useEffect(() => {
         async function getBrands() {
@@ -116,6 +118,7 @@ const ProductCreate: React.FC = () => {
                 alignContent: "center",
             }}
         >
+            {create === 'brand' ? <BrandCreate open={create} setBrandCreateOpen={setCreate} />: null}
             <Typography variant="h3">Create a new product</Typography>
             <Paper
                 elevation={6}
@@ -162,6 +165,10 @@ const ProductCreate: React.FC = () => {
                             <TextField {...params} label="Brands"></TextField>
                         )}
                     />
+                    <Button
+                        onClick={() => setCreate('brand')}
+                        variant="outlined"
+                    >Create a New Brand</Button>
                     <Autocomplete
                         disablePortal
                         options={groups}

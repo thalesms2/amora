@@ -1,3 +1,23 @@
+// {
+// 	"id": 4,
+// 	"description": "produto de teste",
+// 	"measurement": "KG",
+// 	"cost": "2500",
+// 	"profit": "10",
+// 	"price": "2750",
+// 	"brand": [
+// 		{
+// 			"id": 5,
+// 			"description": "RedBull"
+// 		}
+// 	],
+// 	"group": [
+// 		{
+// 			"id": 1,
+// 			"description": "Test group"
+// 		}
+// 	]
+// }
 import {
     Paper,
     Typography,
