@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import api from "./lib/api";
 import { toast } from "react-toastify";
-import BrandCreate from "./components/brandCreate";
+import BrandCreate from "./components/BrandCreate";
 
 interface Brand {
     id: number;
