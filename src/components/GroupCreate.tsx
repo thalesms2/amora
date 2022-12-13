@@ -6,17 +6,18 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    DialogContentText,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import api from "../lib/api";
 
-interface BrandCreateProps {
+interface GroupCreateProps {
     open: String;
-    setBrandCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    setGroupCreateOpen: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BrandCreate: React.FC<BrandCreateProps> = (props) => {
-    const open = props.open == "brand";
+const GroupCreate: React.FC<GroupCreateProps> = (props) => {
+    const open = props.open == "group";
     const [description, setDescription] = React.useState<String>('')
 
     const handleKeydown = async (e: React.KeyboardEvent) => {
@@ -27,11 +28,11 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await api.post("/brand", {
+            const response = await api.post("/group", {
                 description: description,
             })
-            console.log(response)
-            toast('Brand created! 😎')
+            toast('Group created! 😎')
+            props.setGroupCreateOpen('close')
         } catch (err) {
             toast('Error 😦😦')
             console.log(err)
@@ -41,9 +42,9 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
     return (
         <Dialog 
             open={open} 
-            onClose={() => props.setBrandCreateOpen('close')}
+            onClose={() => props.setGroupCreateOpen('close')}
         >
-            <DialogTitle>Create New Brand</DialogTitle>
+            <DialogTitle>Create New Group</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus
@@ -56,11 +57,11 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => props.setBrandCreateOpen('close')}>Cancel</Button>
+                <Button onClick={() => props.setGroupCreateOpen('close')}>Cancel</Button>
                 <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-export default BrandCreate;
+export default GroupCreate;

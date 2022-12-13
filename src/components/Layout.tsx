@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import {
     IconButton,
@@ -13,11 +13,13 @@ import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import { ToastContainer, Flip } from 'react-toastify'
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import 'react-toastify/dist/ReactToastify.css';
 
 import { GlobalStyles } from "../styles/globalstyles";
-import Login from "./Login";
 import Nav from "./Nav";
-import Sign from "./Sign";
+
+const Login = lazy(() => import("./Login"))
+const Sign = lazy(() => import("./Sign"))
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -92,12 +94,12 @@ const Layout: React.FC = () => {
         <ColorModeContext.Provider value={colorMode}>
             <GlobalStyles />
             <ThemeProvider theme={theme}>
-            <ToastContainer
-                theme={mode == 'dark' ? 'light' : 'dark'}
-                position="bottom-right"
-                transition={Flip}
-                autoClose={5000}
-            />
+                <ToastContainer
+                    theme={mode == 'dark' ? 'light' : 'dark'}
+                    position="bottom-right"
+                    transition={Flip}
+                    autoClose={5000}
+                />
                 <Paper
                     elevation={0}
                     sx={{
@@ -144,10 +146,11 @@ const Layout: React.FC = () => {
                             <ThemeButton />
                         </Box>
                     </Box>
-
-                    <Login open={login} setLogin={setLogin} />
-                    <Sign open={login} setLogin={setLogin} />
-                    <Outlet />
+                    <Suspense fallback={""} >
+                        { login === 'login' ? <Login open={login} setLogin={setLogin} /> :  null }
+                        { login === 'sign' ? <Sign open={login} setLogin={setLogin} /> : null }
+                        <Outlet />
+                    </Suspense>
                 </Paper>
             </ThemeProvider>
         </ColorModeContext.Provider>

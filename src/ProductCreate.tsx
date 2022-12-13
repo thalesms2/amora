@@ -185,6 +185,10 @@ const ProductCreate: React.FC = () => {
                             <TextField {...params} label="Groups"></TextField>
                         )}
                     />
+                    <Button
+                        onClick={() => setCreate('brand')}
+                        variant="outlined"
+                    >Create a New Group</Button>
                     <Autocomplete
                         disablePortal
                         options={measurements}

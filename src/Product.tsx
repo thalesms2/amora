@@ -94,7 +94,9 @@ const Product: React.FC = () => {
             padding: "1em",
             margin: "1em",
         }}>
-            <TableContainer sx={{}}>
+            <TableContainer sx={{
+                maxHeight: "80vh"
+            }}>
                 <Typography 
                     variant="h3"
                     sx={{
