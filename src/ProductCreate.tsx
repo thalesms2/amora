@@ -14,6 +14,8 @@ import {
 import api from "./lib/api";
 import { toast } from "react-toastify";
 import BrandCreate from "./components/BrandCreate";
+import GroupCreate from "./components/GroupCreate";
+import MeasurementCreate from "./components/MeasurementCreate";
 
 interface Brand {
     id: number;
@@ -32,6 +34,15 @@ const measurements = [
     { label: "Litro", content: "LT" },
 ];
 
+const ButtonStyle = (position?: String) =>{
+    return {
+        width: "15vw",
+        marginBottom: ".5em",
+        marginRight: position == 'right' ? ".5em" : '',
+        height: '10vh',
+    }
+} 
+
 const ProductCreate: React.FC = () => {
     const [brands, setBrands] = React.useState<Brand[]>([]);
     const [groups, setGroups] = React.useState<Group[]>([]);
@@ -44,7 +55,7 @@ const ProductCreate: React.FC = () => {
     const [groupValue, setGroupValue] = React.useState<String>("");
     const [brandId, setBrandId] = React.useState<Number>(0);
     const [groupId, setGroupId] = React.useState<Number>(0);
-    const [create, setCreate] = React.useState<"brand" | "group" |"closed">('closed')
+    const [create, setCreate] = React.useState<"brand" | "group" | "measurement" |"closed">('closed')
 
     React.useEffect(() => {
         async function getBrands() {
@@ -119,6 +130,8 @@ const ProductCreate: React.FC = () => {
             }}
         >
             {create === 'brand' ? <BrandCreate open={create} setBrandCreateOpen={setCreate} />: null}
+            {create === 'group' ? <GroupCreate open={create} setGroupCreateOpen={setCreate} />: null}
+            {create === 'measurement' ? <MeasurementCreate open={create} setMeasurementCreateOpen={setCreate} />: null}
             <Typography variant="h3">Create a new product</Typography>
             <Paper
                 elevation={6}
@@ -152,6 +165,7 @@ const ProductCreate: React.FC = () => {
                         disableClearable={false}
                         options={brands}
                         value={brandValue}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{
                             width: "15vw",
                             marginBottom: ".5em",
@@ -165,14 +179,11 @@ const ProductCreate: React.FC = () => {
                             <TextField {...params} label="Brands"></TextField>
                         )}
                     />
-                    <Button
-                        onClick={() => setCreate('brand')}
-                        variant="outlined"
-                    >Create a New Brand</Button>
                     <Autocomplete
                         disablePortal
                         options={groups}
                         value={groupValue}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{
                             width: "15vw",
                             marginBottom: ".5em",
@@ -185,13 +196,10 @@ const ProductCreate: React.FC = () => {
                             <TextField {...params} label="Groups"></TextField>
                         )}
                     />
-                    <Button
-                        onClick={() => setCreate('brand')}
-                        variant="outlined"
-                    >Create a New Group</Button>
                     <Autocomplete
                         disablePortal
                         options={measurements}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{
                             width: "15vw",
                             marginBottom: ".5em",
@@ -203,6 +211,28 @@ const ProductCreate: React.FC = () => {
                             <TextField {...params} label="Measurements"></TextField>
                         )}
                     />
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                    }}
+                >
+                    <Button
+                        onClick={() => setCreate('brand')}
+                        variant="outlined"
+                        sx={ ButtonStyle('right') }
+                    >New Brand</Button>
+                    <Button
+                        onClick={() => setCreate('group')}
+                        variant="outlined"
+                        sx={ ButtonStyle('right') }
+                    >New Group</Button>
+                    <Button
+                        onClick={() => setCreate('measurement')}
+                        variant="outlined"
+                        sx={ ButtonStyle() }
+                    >New Measurement</Button>
                 </Box>
                 <Box>
                     <TextField

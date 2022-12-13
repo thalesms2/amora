@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Config: React.FC = () => {
     const [toastText, setToastText] = React.useState('')
+
     const clearLogs = async () => {
         try {
             toast.promise(api.delete("/log/all"), {
@@ -14,11 +15,22 @@ const Config: React.FC = () => {
                 success: "Loading completed 🥳",
                 error: "Error 😦",
             });
-            toast("♻️All logs deleted");
+            toast("All logs deleted ♻️");
         } catch (err) {
-            toast("⚠️Error");
+            toast("Error⚠️");
         }
     };
+
+    const clearBrands = async () => {
+
+    }
+    const clearGroups = async () => {
+
+    }
+    const clearMeasurements = async () => {
+        
+    }
+
     return (
         <Box sx={{}}>
             <Typography
@@ -38,6 +50,33 @@ const Config: React.FC = () => {
             >
                 Clear Logs
             </Button>
+            <Button
+                onClick={clearBrands}
+                sx={{
+                    padding: ".5em 1em",
+                    marginRight: ".5em",
+                }}
+            >
+                Clear Brands
+            </Button>
+            <Button
+                onClick={clearGroups}
+                sx={{
+                    padding: ".5em 1em",
+                    marginRight: ".5em",
+                }}
+            >
+                Clear Groups
+            </Button>
+            <Button
+                onClick={clearMeasurements}
+                sx={{
+                    padding: ".5em 1em",
+                    marginRight: ".5em",
+                }}
+            >
+                Clear Measurements
+            </Button>
             <TextField
                 label="Toast Text"
                 variant="standard"
@@ -51,6 +90,14 @@ const Config: React.FC = () => {
                 }}
             >
                 Testing Toast Totification
+            </Button>
+            <Button
+                onClick={() => toast(`🦄 ${window.sessionStorage.getItem('userId')}!`)}
+                sx={{
+                    padding: ".5em 1em",
+                }}
+            >
+                User ID
             </Button>
         </Box>
     );

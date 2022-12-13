@@ -70,7 +70,6 @@ const Log: React.FC = () => {
                         error: "Error 😦",
                     }
                 ) 
-                console.log(data);
                 setLogs(data);
             } catch (err) {
                 alert("Houve um erro ao consultar logs");

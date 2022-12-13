@@ -10,12 +10,12 @@ import {
 import { toast } from "react-toastify";
 import api from "../lib/api";
 
-interface BrandCreateProps {
+interface MeasurementCreateProps {
     open: String;
-    setBrandCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    setMeasurementCreateOpen: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BrandCreate: React.FC<BrandCreateProps> = (props) => {
+const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
     const open = props.open == "brand";
     const [description, setDescription] = React.useState<String>('')
 
@@ -27,24 +27,23 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await api.post("/brand", {
+            const response = await api.post("/measurement", {
                 description: description,
                 userId: window.sessionStorage.getItem('userId')
             })
-            toast('Brand created! 😎')
-            props.setBrandCreateOpen('closed')
+            toast('Measument created! 😎')
+            props.setMeasurementCreateOpen('closed')
         } catch (err) {
             toast('Error 😦😦')
-            console.log(err)
         }
     };
 
     return (
         <Dialog 
             open={open} 
-            onClose={() => props.setBrandCreateOpen('close')}
+            onClose={() => props.setMeasurementCreateOpen('close')}
         >
-            <DialogTitle>Create New Brand</DialogTitle>
+            <DialogTitle>Create New Measurement</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus
@@ -57,11 +56,11 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => props.setBrandCreateOpen('close')}>Cancel</Button>
+                <Button onClick={() => props.setMeasurementCreateOpen('close')}>Cancel</Button>
                 <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-export default BrandCreate;
+export default MeasurementCreate;
