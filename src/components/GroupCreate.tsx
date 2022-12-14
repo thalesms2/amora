@@ -14,6 +14,7 @@ import api from "../lib/api";
 interface GroupCreateProps {
     open: String;
     setGroupCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    getGroups: () => void;
 }
 
 const GroupCreate: React.FC<GroupCreateProps> = (props) => {
@@ -28,10 +29,15 @@ const GroupCreate: React.FC<GroupCreateProps> = (props) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await api.post("/group", {
+            const response = await toast.promise(api.post("/group", {
                 description: description,
+            }),{
+                pending: "Loading 😴",
+                success: "Loading completed 🥳",
+                error: "Error 😦",
             })
             toast('Group created! 😎')
+            props.getGroups()
             props.setGroupCreateOpen('close')
         } catch (err) {
             toast('Error 😦😦')

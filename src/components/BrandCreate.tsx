@@ -13,6 +13,7 @@ import api from "../lib/api";
 interface BrandCreateProps {
     open: String;
     setBrandCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    getBrands: () => void;
 }
 
 const BrandCreate: React.FC<BrandCreateProps> = (props) => {
@@ -27,15 +28,19 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await api.post("/brand", {
+            const response = await toast.promise(api.post("/brand", {
                 description: description,
                 userId: window.sessionStorage.getItem('userId')
+            }),{
+                pending: "Loading 😴",
+                success: "Loading completed 🥳",
+                error: "Error 😦",
             })
             toast('Brand created! 😎')
+            props.getBrands();
             props.setBrandCreateOpen('closed')
         } catch (err) {
             toast('Error 😦😦')
-            console.log(err)
         }
     };
 

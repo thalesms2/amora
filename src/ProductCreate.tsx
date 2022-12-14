@@ -27,12 +27,11 @@ interface Group {
     description: string;
 }
 
-const measurements = [
-    { label: "Peça", content: "PC" },
-    { label: "Unidade", content: "UN" },
-    { label: "Kilograma", content: "KG" },
-    { label: "Litro", content: "LT" },
-];
+interface Measurement {
+    id: number;
+    description: string;
+    initials: string;
+}
 
 const ButtonStyle = (position?: String) =>{
     return {
@@ -46,64 +45,83 @@ const ButtonStyle = (position?: String) =>{
 const ProductCreate: React.FC = () => {
     const [brands, setBrands] = React.useState<Brand[]>([]);
     const [groups, setGroups] = React.useState<Group[]>([]);
+    const [measurements, setMeasurements] = React.useState<Measurement[]>([]);
     const [description, setDescription] = React.useState<String>("");
-    const [measurement, setMeasurement] = React.useState<String>("");
     const [cost, setCost] = React.useState<String>("");
     const [profit, setProfit] = React.useState<String>("");
     const [price, setPrice] = React.useState<String>("");
     const [brandValue, setBrandValue] = React.useState<String>("");
     const [groupValue, setGroupValue] = React.useState<String>("");
+    const [measurementValue, setMeasurementValue] = React.useState<String>("");
     const [brandId, setBrandId] = React.useState<Number>(0);
     const [groupId, setGroupId] = React.useState<Number>(0);
+    const [measurementId, setMeasurementId] = React.useState<Number>(0);
     const [create, setCreate] = React.useState<"brand" | "group" | "measurement" |"closed">('closed')
-
+    async function getBrands() {
+        try {
+            const { data } = await api.get("/brand")
+            const res: any = []
+            data.map((brand: Brand) => {
+                res.push({
+                    key: `${brand.id} - ${brand.description}`,
+                    label: brand.description,
+                    content: brand.id
+                })
+            })
+            setBrands(res)
+        } catch (err) {
+            toast('Error to get brands 😦')
+        }
+    }
+    async function getGroups() {
+        try {
+            const { data } = await api.get("/group")
+            const res: any = []
+            data.map((group: Group) => {
+                res.push({
+                    key: `${group.id} - ${group.description}`,
+                    label: group.description,
+                    content: group.id
+                })
+            })
+            setGroups(res)
+        } catch (err) {
+            toast('Error to get groups 😦')
+            console.log(err)
+        }
+    }
+    async function getMeasurements() {
+        try {
+            const { data } = await api.get("/measurement")
+            const res: any = []
+            data.map((measurement: Measurement) => {
+                res.push({
+                    key: `${measurement.id} - ${measurement.description}`,
+                    label: `${measurement.initials} | ${measurement.description}`,
+                    content: measurement.id
+                })
+            })
+            setMeasurements(res)
+        } catch (err) {
+            toast('Error to get measurement 😦')
+            console.log(err)
+        }
+    }
     React.useEffect(() => {
-        async function getBrands() {
-            try {
-                const { data } = await api.get("/brand")
-                const res: any = []
-                data.map((brand: Brand) => {
-                    res.push({
-                        key: `${brand.id} - ${brand.description}`,
-                        label: brand.description,
-                        content: brand.id
-                    })
-                })
-                setBrands(res)
-            } catch (err) {
-                toast('Error to get brands 😦')
-            }
-        }
-        async function getGroups() {
-            try {
-                const { data } = await api.get("/group")
-                const res: any = []
-                data.map((group: Group) => {
-                    res.push({
-                        key: `${group.id} - ${group.description}`,
-                        label: group.description,
-                        content: group.id
-                    })
-                })
-                setGroups(res)
-            } catch (err) {
-                toast('Error to get groups 😦')
-                console.log(err)
-            }
-        }
         getBrands()
         getGroups()
+        getMeasurements()
     }, [])
     const handleSubmit = async () => {
         try{
             const response = await api.post("/product", {
                 description: description,
-                measurement: measurement,
                 cost: cost,
                 profit: profit,
                 price: price,
                 brandId: brandId,
                 groupId: groupId,
+                measurementId: measurementId,
             });    
             toast('Product created 🥳')
         } catch (err) {
@@ -112,7 +130,6 @@ const ProductCreate: React.FC = () => {
     };
     const handleClear = async () => {
         setDescription('')
-        setMeasurement('')
         setCost('')
         setProfit('')
         setPrice('')
@@ -120,6 +137,8 @@ const ProductCreate: React.FC = () => {
         setBrandId(0)
         setGroupValue('')
         setGroupId(0)
+        setMeasurementValue('')
+        setMeasurementId(0)
     }
     return (
         <Box
@@ -130,9 +149,9 @@ const ProductCreate: React.FC = () => {
                 alignContent: "center",
             }}
         >
-            {create === 'brand' ? <BrandCreate open={create} setBrandCreateOpen={setCreate} />: null}
-            {create === 'group' ? <GroupCreate open={create} setGroupCreateOpen={setCreate} />: null}
-            {create === 'measurement' ? <MeasurementCreate open={create} setMeasurementCreateOpen={setCreate} />: null}
+            {create === 'brand' ? <BrandCreate getBrands={getBrands} open={create} setBrandCreateOpen={setCreate} />: null}
+            {create === 'group' ? <GroupCreate getGroups={getGroups} open={create} setGroupCreateOpen={setCreate} />: null}
+            {create === 'measurement' ? <MeasurementCreate getMeasurements={getMeasurements} open={create} setMeasurementCreateOpen={setCreate} />: null}
             <Typography variant="h3">Create a new product</Typography>
             <Paper
                 elevation={6}
@@ -192,6 +211,7 @@ const ProductCreate: React.FC = () => {
                         }}
                         onChange={(event: any, group:any) => {
                             setGroupId(group.content);
+                            setGroupValue(group.label);
                         }}
                         renderInput={(params) => (
                             <TextField {...params} label="Groups"></TextField>
@@ -200,13 +220,15 @@ const ProductCreate: React.FC = () => {
                     <Autocomplete
                         disablePortal
                         options={measurements}
+                        value={measurementValue}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{
                             width: "15vw",
                             marginBottom: ".5em",
                         }}
                         onChange={(event: any, measurement:any) => {
-                            setMeasurement(measurement.content);
+                            setMeasurementId(measurement.content);
+                            setMeasurementValue(measurement.label)
                         }}
                         renderInput={(params) => (
                             <TextField {...params} label="Measurements"></TextField>

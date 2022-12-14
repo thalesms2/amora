@@ -13,6 +13,7 @@ import api from "../lib/api";
 interface MeasurementCreateProps {
     open: String;
     setMeasurementCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    getMeasurements: () => void;
 }
 
 const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
@@ -28,12 +29,17 @@ const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await api.post("/measurement", {
+            const response = await toast.promise(api.post("/measurement", {
                 description: description,
                 initials: initials,
                 userId: window.sessionStorage.getItem('userId')
+            }),{
+                pending: "Loading 😴",
+                success: "Loading completed 🥳",
+                error: "Error 😦",
             })
             toast('Measument created! 😎')
+            props.getMeasurements()
             props.setMeasurementCreateOpen('closed')
         } catch (err) {
             toast('Error 😦😦')
