@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import api from "../lib/api";
+import promiseResults from "../lib/toastPromiseDefault";
 
 interface UserEditProps {
     open: String;
@@ -36,13 +37,7 @@ const UserEdit: React.FC<UserEditProps> = (props) => {
                     id: props.id,
                     name: name,
                     password: password,
-                }),
-                {
-                    pending: "Loading 😴",
-                    success: "Loading completed 🥳",
-                    error: "Error 😦",
-                }
-            );
+                }), promiseResults);
             toast("User edited 🥳");
         } catch (err) {
             toast("Wrong ID or Password 🥶");

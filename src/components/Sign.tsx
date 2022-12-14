@@ -18,6 +18,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { toast } from "react-toastify";
 import api from "../lib/api";
 import { handleKeydown } from "../lib/formHooks";
+import promiseResults from "../lib/toastPromiseDefault";
 
 interface SignProps {
     open: String;
@@ -41,13 +42,7 @@ const Sign: React.FC<SignProps> = (props) => {
                 name: name,
                 password: password,
                 type: type,
-            }),
-            {
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            }
-        );
+            }), promiseResults);
         if (response.data.sucess) {
             toast(`Signed up Id - ${response.data.create.id} 💾`);
             props.setLogin("login");

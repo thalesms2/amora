@@ -6,10 +6,10 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
-    DialogContentText,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import api from "../lib/api";
+import promiseResults from '../lib/toastPromiseDefault'
 
 interface GroupCreateProps {
     open: String;
@@ -31,11 +31,7 @@ const GroupCreate: React.FC<GroupCreateProps> = (props) => {
         try {
             const response = await toast.promise(api.post("/group", {
                 description: description,
-            }),{
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            })
+            }), promiseResults)
             toast('Group created! 😎')
             props.getGroups()
             props.setGroupCreateOpen('close')

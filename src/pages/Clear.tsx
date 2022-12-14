@@ -1,18 +1,13 @@
 import React from "react";
-import { Box, Button, Typography, TextField } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import api from "./lib/api";
+import api from "../lib/api";
+import promiseResults from "../lib/toastPromiseDefault";
 
-const Config: React.FC = () => {
-    const [toastText, setToastText] = React.useState("");
-
+const Clear: React.FC = () => {
     const clearLogs = async () => {
         try {
-            toast.promise(api.delete("/log/all"), {
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            });
+            toast.promise(api.delete("/log/all"), promiseResults);
             toast("All logs deleted ♻️");
         } catch (err) {
             toast("Error⚠️");
@@ -21,11 +16,7 @@ const Config: React.FC = () => {
 
     const clearBrands = async () => {
         try {
-            toast.promise(api.delete("/brand/all"), {
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            });
+            toast.promise(api.delete("/brand/all"), promiseResults);
             toast("All brands deleted ♻️");
         } catch (err) {
             toast("Error⚠️");
@@ -34,11 +25,7 @@ const Config: React.FC = () => {
 
     const clearGroups = async () => {
         try {
-            toast.promise(api.delete("/group/all"), {
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            });
+            toast.promise(api.delete("/group/all"), promiseResults);
             toast("All groups deleted ♻️");
         } catch (err) {
             toast("Error⚠️");
@@ -46,11 +33,7 @@ const Config: React.FC = () => {
     };
     const clearMeasurements = async () => {
         try {
-            toast.promise(api.delete("/measurement/all"), {
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            });
+            toast.promise(api.delete("/measurement/all"), promiseResults);
             toast("All measurements deleted ♻️");
         } catch (err) {
             toast("Error⚠️");
@@ -65,7 +48,7 @@ const Config: React.FC = () => {
                     marginBottom: ".5em",
                 }}
             >
-                Configs
+                Clear Data
             </Typography>
             <Button
                 onClick={clearLogs}
@@ -103,32 +86,8 @@ const Config: React.FC = () => {
             >
                 Clear Measurements
             </Button>
-            <TextField
-                label="Toast Text"
-                variant="standard"
-                value={toastText}
-                onChange={(e) => setToastText(e.target.value)}
-            />
-            <Button
-                onClick={() => toast(`🦄 ${toastText}!`)}
-                sx={{
-                    padding: ".5em 1em",
-                }}
-            >
-                Testing Toast Totification
-            </Button>
-            <Button
-                onClick={() =>
-                    toast(`🦄 ${window.sessionStorage.getItem("userId")}!`)
-                }
-                sx={{
-                    padding: ".5em 1em",
-                }}
-            >
-                User ID
-            </Button>
         </Box>
     );
 };
 
-export default Config;
+export default Clear;

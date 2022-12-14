@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import api from "../lib/api";
+import promiseResults from '../lib/toastPromiseDefault'
 
 interface BrandCreateProps {
     open: String;
@@ -31,11 +32,7 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
             const response = await toast.promise(api.post("/brand", {
                 description: description,
                 userId: window.sessionStorage.getItem('userId')
-            }),{
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            })
+            }), promiseResults)
             toast('Brand created! 😎')
             props.getBrands();
             props.setBrandCreateOpen('closed')

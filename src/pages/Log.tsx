@@ -1,109 +1,104 @@
-// {
-// 	"id": 4,
-// 	"description": "produto de teste",
-// 	"measurement": "KG",
-// 	"cost": "2500",
-// 	"profit": "10",
-// 	"price": "2750",
-// 	"brand": [
-// 		{
-// 			"id": 5,
-// 			"description": "RedBull"
-// 		}
-// 	],
-// 	"group": [
-// 		{
-// 			"id": 1,
-// 			"description": "Test group"
-// 		}
-// 	]
-// }
+import React from "react";
 import {
     Paper,
     Typography,
-    TableBody,
-    TableContainer,
     Table,
-    TableHead,
-    TableRow,
+    TableBody,
     TableCell,
-    TablePagination
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
 } from "@mui/material";
 import { toast } from 'react-toastify'
-import React from "react";
-import api from "./lib/api";
-
-interface Product {
-    id: number;
-    description: string;
-    cost: number;
-    measurement: string;
-    price: number;
-    profit: number;
-}
+import api from "../lib/api";
+import promiseResults from "../lib/toastPromiseDefault";
 
 interface Column {
-    id: "id" | "description" | "cost" | "measurement" | "price" | "profit";
+    id: "id" | "type" | "description" | "user" | "createdAt";
     label: string;
     minWidth?: number;
     align?: "right" | "center";
+    format?: (value: number) => string;
 }
 
 const columns: readonly Column[] = [
-    { id: "id", label: "ID", minWidth: 30, align: "right" },
-    { id: "description", label: "Description", minWidth: 200, align: "center" },
-    { id: "measurement", label: "Measurement", minWidth: 30, align: "right" },
-    { id: "cost", label: "Cost", minWidth: 30, align: "right" },
-    { id: "profit", label: "Profit", minWidth: 30, align: "right" },
-    { id: "price", label: "Price", minWidth: 30, align: "right" },
+    { id: "id", label: "Id", minWidth: 170 },
+    { id: "type", label: "Type", minWidth: 100 },
+    {
+        id: "description",
+        label: "Description",
+        minWidth: 170,
+    },
+    {
+        id: "user",
+        label: "User",
+        minWidth: 170,
+    },
+    {
+        id: "createdAt",
+        label: "Created At",
+        minWidth: 170,
+        format: (value: number) => value.toFixed(2),
+    },
 ];
+interface Log {
+    id: number;
+    type: "CREATE" | "EDIT" | "DELETE" | "LOGIN";
+    description: string;
+    userId: number;
+    createdAt: Date;
+}
 
-const Product: React.FC = () => {
+interface User {
+    id: number;
+    name: string;
+}
+
+const Log: React.FC = () => {
+    const [logs, setLogs] = React.useState<Log[]>([]);
+    const [users, setUsers] = React.useState<User[]>([]);
+    const [open, setOpen] = React.useState(true);
+
+    React.useEffect(() => {
+        async function getAllLogs() {
+            try {
+                const { data } = await toast.promise(api.get("/log"), promiseResults) 
+                setLogs(data);
+            } catch (err) {
+                alert("Houve um erro ao consultar logs");
+            }
+        }
+        getAllLogs();
+    }, []);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [products, setProducts] = React.useState<Product[]>([]);
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
+
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    React.useEffect(() => {
-        async function getProducts() {
-            try {
-                const { data } = await toast.promise(
-                    api.get("/product"),
-                    {
-                        pending: "Loading 😴",
-                        success: "Loading completed 🥳",
-                        error: "Error 😦",
-                    }
-                ) 
-                setProducts(data);
-            } catch (err) {
-                alert("Ocorreu um erro ao buscar os produtos");
-            }
-        }
-        getProducts();
-    }, []);
     return (
-        <Paper sx={{ 
+        <Paper sx={{
             padding: "1em",
             margin: "1em",
         }}>
             <TableContainer sx={{
-                maxHeight: "80vh"
+                maxHeight: "75vh",
             }}>
                 <Typography 
                     variant="h3"
                     sx={{
                         marginBotton: '.5em',
                     }}
-                >Products</Typography>
-                <Table stickyHeader aria-label="stycky table">
+                >Logs</Typography>
+                <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
                             {columns.map((column) => (
@@ -118,27 +113,30 @@ const Product: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {products
+                        {logs
                             .slice(
                                 page * rowsPerPage,
                                 page * rowsPerPage + rowsPerPage
                             )
-                            .map((product) => {
+                            .map((log) => {
                                 return (
                                     <TableRow
                                         hover
                                         role="checkbox"
                                         tabIndex={-1}
-                                        key={product.id}
+                                        key={log.id}
                                     >
                                         {columns.map((column) => {
-                                            const value = product[column.id];
+                                            const value = log[column.id];
                                             return (
                                                 <TableCell
                                                     key={column.id}
                                                     align={column.align}
                                                 >
-                                                    {value}
+                                                    {column.format &&
+                                                    typeof value === "number"
+                                                        ? column.format(value)
+                                                        : value}
                                                 </TableCell>
                                             );
                                         })}
@@ -147,18 +145,18 @@ const Product: React.FC = () => {
                             })}
                     </TableBody>
                 </Table>
-                <TablePagination
-                    rowsPerPageOptions={[10, 15, 30]}
-                    component="div"
-                    count={products.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
             </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[15, 30, 100]}
+                component="div"
+                count={logs.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </Paper>
     );
 };
 
-export default Product;
+export default Log;

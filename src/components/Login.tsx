@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import api from "../lib/api";
+import promiseResults from "../lib/toastPromiseDefault";
 
 interface LoginProps {
     open: String;
@@ -32,13 +33,7 @@ const Login: React.FC<LoginProps> = (props) => {
             api.post("/user", {
                 id: Number(id),
                 password: password,
-            }),
-            {
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            }
-        );
+            }), promiseResults);
         if (response.data.login) {
             window.sessionStorage.setItem("userId", response.data.id);
             window.sessionStorage.setItem("name", response.data.name);

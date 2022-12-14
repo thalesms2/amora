@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import api from "../lib/api";
+import promiseResults from "../lib/toastPromiseDefault";
 
 interface MeasurementCreateProps {
     open: String;
@@ -33,11 +34,7 @@ const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
                 description: description,
                 initials: initials,
                 userId: window.sessionStorage.getItem('userId')
-            }),{
-                pending: "Loading 😴",
-                success: "Loading completed 🥳",
-                error: "Error 😦",
-            })
+            }), promiseResults)
             toast('Measument created! 😎')
             props.getMeasurements()
             props.setMeasurementCreateOpen('closed')

@@ -3,16 +3,18 @@ import { lazy } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './components/Layout'
 
-const Home = lazy(() => import("./Home"))
-const Storage = lazy(() => import("./Storage"))
-const Product = lazy(() => import("./Product"))
-const Sell = lazy(() => import("./Sell"))
-const Company = lazy(() => import("./Company"))
-const Config = lazy(() => import("./Config"))
-const ProductCreate = lazy(() => import("./ProductCreate"))
-const Log = lazy(() => import("./Log"))
-const User = lazy(() => import("./User"))
-const Shop = lazy(() => import("./Shop"))
+const Home = lazy(() => import("./pages/Home"))
+const Storage = lazy(() => import("./pages/Storage"))
+const Product = lazy(() => import("./pages/Product"))
+const Sell = lazy(() => import("./pages/Sell"))
+const Company = lazy(() => import("./pages/Company"))
+const Clear = lazy(() => import("./pages/Clear"))
+const Test = lazy(() => import("./pages/Test"))
+const ProductCreate = lazy(() => import("./pages/ProductCreate"))
+const Log = lazy(() => import("./pages/Log"))
+const User = lazy(() => import("./pages/User"))
+const Shop = lazy(() => import("./pages/Shop"))
+const Client = lazy(() => import("./pages/Client"))
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
@@ -24,10 +26,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 <Route path="/product/create" element={<ProductCreate />} />
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/shop" element={<Shop />} />
+                <Route path="/shop/client" element={<Client />} />
                 <Route path="/company" element={<Company />} />
                 <Route path="/company/user" element={<User />} />
                 <Route path="/company/log" element={<Log />} />
-                <Route path="/config" element={<Config />} />
+                <Route path="/config/clear" element={<Clear />} />
+                <Route path="/config/test" element={<Test />} />
             </Route>
         </Routes>
     </BrowserRouter>

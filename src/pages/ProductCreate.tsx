@@ -11,11 +11,11 @@ import {
     FormHelperText,
     Button,
 } from "@mui/material";
-import api from "./lib/api";
+import api from "../lib/api";
 import { toast } from "react-toastify";
-import BrandCreate from "./components/BrandCreate";
-import GroupCreate from "./components/GroupCreate";
-import MeasurementCreate from "./components/MeasurementCreate";
+import BrandCreate from "../components/BrandCreate";
+import GroupCreate from "../components/GroupCreate";
+import MeasurementCreate from "../components/MeasurementCreate";
 
 interface Brand {
     id: number;

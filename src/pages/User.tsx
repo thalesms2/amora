@@ -15,8 +15,9 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import { toast } from "react-toastify";
 
-import api from "./lib/api";
-import UserEdit from './components/UserEdit'
+import api from "../lib/api";
+import UserEdit from '../components/UserEdit'
+import promiseResults from "../lib/toastPromiseDefault";
 
 interface User {
     id: number
@@ -49,12 +50,7 @@ const User: React.FC = () => {
     const delUser = async (id: number) => {
         try {
             const result = await toast.promise(
-                api.delete(`/user/${id}`),
-                {
-                    pending: "Loading 😴",
-                    success: "Loading completed 🥳",
-                    error: "Error 😦",
-                })
+                api.delete(`/user/${id}`), promiseResults)
             toast('User deleted 💀')
             getAllUsers()
         } catch (err) {
