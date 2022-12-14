@@ -88,6 +88,7 @@ const ProductCreate: React.FC = () => {
                 setGroups(res)
             } catch (err) {
                 toast('Error to get groups 😦')
+                console.log(err)
             }
         }
         getBrands()
