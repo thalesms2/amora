@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import {
     Box,
     Paper,
@@ -11,11 +11,13 @@ import {
     FormHelperText,
     Button,
 } from "@mui/material";
-import api from "../lib/api";
 import { toast } from "react-toastify";
-import BrandCreate from "../components/BrandCreate";
-import GroupCreate from "../components/GroupCreate";
-import MeasurementCreate from "../components/MeasurementCreate";
+
+import api from "../lib/api";
+
+const BrandCreate = lazy(() => import("./components/BrandCreate"))
+const GroupCreate = lazy(() => import("./components/GroupCreate"))
+const MeasurementCreate = lazy(() => import("./components/MeasurementCreate"))
 
 interface Brand {
     id: number;
@@ -42,20 +44,20 @@ const ButtonStyle = (position?: String) =>{
     }
 } 
 
-const ProductCreate: React.FC = () => {
+const CreateProduct: React.FC = () => {
     const [brands, setBrands] = React.useState<Brand[]>([]);
     const [groups, setGroups] = React.useState<Group[]>([]);
     const [measurements, setMeasurements] = React.useState<Measurement[]>([]);
-    const [description, setDescription] = React.useState<String>("");
-    const [cost, setCost] = React.useState<String>("");
-    const [profit, setProfit] = React.useState<String>("");
-    const [price, setPrice] = React.useState<String>("");
-    const [brandValue, setBrandValue] = React.useState<String>("");
-    const [groupValue, setGroupValue] = React.useState<String>("");
-    const [measurementValue, setMeasurementValue] = React.useState<String>("");
-    const [brandId, setBrandId] = React.useState<Number>(0);
-    const [groupId, setGroupId] = React.useState<Number>(0);
-    const [measurementId, setMeasurementId] = React.useState<Number>(0);
+    const [description, setDescription] = React.useState<String>(null);
+    const [cost, setCost] = React.useState<String>(null);
+    const [profit, setProfit] = React.useState<String>(null);
+    const [price, setPrice] = React.useState<String>(null);
+    const [brandValue, setBrandValue] = React.useState<String>(null);
+    const [groupValue, setGroupValue] = React.useState<String>(null);
+    const [measurementValue, setMeasurementValue] = React.useState<String>(null);
+    const [brandId, setBrandId] = React.useState<Number>(null);
+    const [groupId, setGroupId] = React.useState<Number>(null);
+    const [measurementId, setMeasurementId] = React.useState<Number>(null);
     const [create, setCreate] = React.useState<"brand" | "group" | "measurement" |"closed">('closed')
     async function getBrands() {
         try {
@@ -182,7 +184,7 @@ const ProductCreate: React.FC = () => {
                 >
                     <Autocomplete
                         disablePortal
-                        disableClearable={false}
+                        disableClearable
                         options={brands}
                         value={brandValue}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -200,6 +202,7 @@ const ProductCreate: React.FC = () => {
                         )}
                     />
                     <Autocomplete
+                        disableClearable
                         disablePortal
                         options={groups}
                         value={groupValue}
@@ -219,6 +222,7 @@ const ProductCreate: React.FC = () => {
                     />
                     <Autocomplete
                         disablePortal
+                        disableClearable
                         options={measurements}
                         value={measurementValue}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -329,4 +333,4 @@ const ProductCreate: React.FC = () => {
     );
 };
 
-export default ProductCreate;
+export default CreateProduct;

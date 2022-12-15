@@ -13,6 +13,7 @@ const Sell: React.FC = () => {
             >
             Sell
             </Typography>
+            fazendo a venda
         </div>
     )
 }

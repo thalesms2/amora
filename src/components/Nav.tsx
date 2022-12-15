@@ -90,17 +90,6 @@ const Nav = () => {
                     marginRight: ".5em",
                 }}
             >
-                <Link to="/product">
-                    <MenuItem
-                        onClick={handleProductClose}
-                        divider
-                        sx={{
-                            color: theme.palette.text.primary,
-                        }}
-                    >
-                        Consult all products
-                    </MenuItem>
-                </Link>
                 <Link to="/product/create">
                     <MenuItem
                         onClick={handleProductClose}
@@ -110,6 +99,17 @@ const Nav = () => {
                         }}
                     >
                         Create new product
+                    </MenuItem>
+                </Link>
+                <Link to="/product">
+                    <MenuItem
+                        onClick={handleProductClose}
+                        divider
+                        sx={{
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        List all products
                     </MenuItem>
                 </Link>
             </Menu>
@@ -221,6 +221,17 @@ const Nav = () => {
                     "aria-labelledby": "basic-button",
                 }}
             >
+                <Link to="/shop/client/create">
+                    <MenuItem
+                        onClick={handleSellClose}
+                        divider
+                        sx={{
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        Create a new client
+                    </MenuItem>
+                </Link>
                 <Link to="/shop/client">
                     <MenuItem
                         onClick={handleSellClose}
@@ -229,18 +240,7 @@ const Nav = () => {
                             color: theme.palette.text.primary,
                         }}
                     >
-                        Client
-                    </MenuItem>
-                </Link>
-                <Link to="/shop">
-                    <MenuItem
-                        onClick={handleSellClose}
-                        divider
-                        sx={{
-                            color: theme.palette.text.primary,
-                        }}
-                    >
-                        Shop
+                        List all clients
                     </MenuItem>
                 </Link>
             </Menu>

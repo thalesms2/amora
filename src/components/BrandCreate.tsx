@@ -19,7 +19,7 @@ interface BrandCreateProps {
 
 const BrandCreate: React.FC<BrandCreateProps> = (props) => {
     const open = props.open == "brand";
-    const [description, setDescription] = React.useState<String>('')
+    const [description, setDescription] = React.useState<String>(null)
 
     const handleKeydown = async (e: React.KeyboardEvent) => {
         if (e.code === "Enter" || e.code === "NumpadEnter") {

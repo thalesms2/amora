@@ -19,8 +19,8 @@ interface MeasurementCreateProps {
 
 const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
     const open = props.open == "measurement";
-    const [description, setDescription] = React.useState<String>('')
-    const [initials, setInitials] = React.useState<String>('')
+    const [description, setDescription] = React.useState<String>(null)
+    const [initials, setInitials] = React.useState<String>(null)
 
     const handleKeydown = async (e: React.KeyboardEvent) => {
         if (e.code === "Enter" || e.code === "NumpadEnter") {

@@ -27,8 +27,8 @@ interface SignProps {
 
 const Sign: React.FC<SignProps> = (props) => {
     const [id, setId] = React.useState<Number>(null);
-    const [name, setName] = React.useState<String>("");
-    const [password, setPassword] = React.useState<String>("");
+    const [name, setName] = React.useState<String>(null);
+    const [password, setPassword] = React.useState<String>(null);
     const [type, setType] = React.useState<"admin" | "normal" | "null">(
         "normal"
     );

@@ -17,8 +17,8 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = (props) => {
-    const [id, setId] = React.useState<String>("");
-    const [password, setPassword] = React.useState<String>("");
+    const [id, setId] = React.useState<String>(null);
+    const [password, setPassword] = React.useState<String>(null);
     const open = props.open == "login";
 
     const handleKeydown = async(e: React.KeyboardEvent) => {

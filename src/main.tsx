@@ -10,7 +10,8 @@ const Sell = lazy(() => import("./pages/Sell"))
 const Company = lazy(() => import("./pages/Company"))
 const Clear = lazy(() => import("./pages/Clear"))
 const Test = lazy(() => import("./pages/Test"))
-const ProductCreate = lazy(() => import("./pages/ProductCreate"))
+const CreateProduct = lazy(() => import("./pages/CreateProduct"))
+const CreateClient = lazy(() => import("./pages/CreateClient"))
 const Log = lazy(() => import("./pages/Log"))
 const User = lazy(() => import("./pages/User"))
 const Shop = lazy(() => import("./pages/Shop"))
@@ -23,10 +24,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 <Route index element={<Home />} />
                 <Route path="/storage" element={<Storage />} />
                 <Route path="/product" element={<Product />} />
-                <Route path="/product/create" element={<ProductCreate />} />
+                <Route path="/product/create" element={<CreateProduct />} />
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/shop/client" element={<Client />} />
+                <Route path="/shop/client/create" element={<CreateClient />} />
                 <Route path="/company" element={<Company />} />
                 <Route path="/company/user" element={<User />} />
                 <Route path="/company/log" element={<Log />} />

@@ -27,7 +27,7 @@ interface User {
 const User: React.FC = () => {
     const [users, setUsers] = React.useState<User[]>([])
     const [edit, setEdit] = React.useState<'open' | 'closed'>('closed')
-    const [userEdited, setUserEdited] = React.useState<Number>(0)
+    const [userEdited, setUserEdited] = React.useState<Number>(null)
     const getAllUsers = async () => {
         try {
             const { data } = await toast.promise(

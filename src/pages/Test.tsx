@@ -3,7 +3,7 @@ import { Box, Button, Typography, TextField } from "@mui/material";
 import { toast } from "react-toastify";
 
 const Clear: React.FC = () => {
-    const [toastText, setToastText] = React.useState("");
+    const [toastText, setToastText] = React.useState(null);
 
     return (
         <Box sx={{}}>

@@ -19,7 +19,7 @@ interface GroupCreateProps {
 
 const GroupCreate: React.FC<GroupCreateProps> = (props) => {
     const open = props.open == "group";
-    const [description, setDescription] = React.useState<String>('')
+    const [description, setDescription] = React.useState<String>(null)
 
     const handleKeydown = async (e: React.KeyboardEvent) => {
         if (e.code === "Enter" || e.code === "NumpadEnter") {

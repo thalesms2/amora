@@ -19,8 +19,8 @@ interface UserEditProps {
 }
 
 const UserEdit: React.FC<UserEditProps> = (props) => {
-    const [name, setName] = React.useState<String>("");
-    const [password, setPassword] = React.useState<String>("");
+    const [name, setName] = React.useState<String>(null);
+    const [password, setPassword] = React.useState<String>(null);
     const open = props.open == "open";
 
     const handleKeydown = async (e: React.KeyboardEvent) => {

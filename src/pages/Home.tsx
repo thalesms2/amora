@@ -1,17 +1,31 @@
-import React from "react";
-import { Typography } from "@mui/material";
+import React, { lazy } from "react";
+import { Typography, Box } from "@mui/material";
+
+import Todo from "../components/Todo";
+
+const CreateTodo = lazy(() => import("../components/CreateTodo"))
+
 
 const App: React.FC = () => {
+    const [popup, setPopup] = React.useState<'create' | 'edit' | 'closed'>('closed')
+    const handleChangeOnPopup = (origin: 'create' | 'edit' | 'closed') => {
+        if(origin === popup) {
+            setPopup('closed')
+        } else {
+            setPopup(origin)
+        }
+    }
     return (
         <div>
-            <Typography
-                variant="h3"
+            {popup === 'create' ? <CreateTodo open={popup} setOpen={handleChangeOnPopup} /> : null}
+            <Box
                 sx={{
-                    marginBottom: ".5 em",
+                    display: "flex",
+                    justifyContent: "flex-end",
                 }}
             >
-                Hello World { window.sessionStorage.getItem('name')}
-            </Typography>  
+                <Todo />
+            </Box>
         </div>
     );
 };
