@@ -11,14 +11,14 @@ import { toast } from "react-toastify";
 import api from "../lib/api";
 import promiseResults from "../lib/toastPromiseDefault";
 
-interface UserEditProps {
+interface EditUserProps {
     open: String;
     setEdit: React.Dispatch<React.SetStateAction<string>>;
     id: Number;
     getAllUsers: () => void
 }
 
-const UserEdit: React.FC<UserEditProps> = (props) => {
+const EditUser: React.FC<EditUserProps> = (props) => {
     const [name, setName] = React.useState<String>(null);
     const [password, setPassword] = React.useState<String>(null);
     const open = props.open == "open";
@@ -87,4 +87,4 @@ const UserEdit: React.FC<UserEditProps> = (props) => {
     );
 };
 
-export default UserEdit;
+export default EditUser;

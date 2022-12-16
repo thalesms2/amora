@@ -11,13 +11,13 @@ import { toast } from "react-toastify";
 import api from "../lib/api";
 import promiseResults from '../lib/toastPromiseDefault'
 
-interface GroupCreateProps {
+interface CreateGroupProps {
     open: String;
-    setGroupCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateGroupOpen: React.Dispatch<React.SetStateAction<string>>;
     getGroups: () => void;
 }
 
-const GroupCreate: React.FC<GroupCreateProps> = (props) => {
+const CreateGroup: React.FC<CreateGroupProps> = (props) => {
     const open = props.open == "group";
     const [description, setDescription] = React.useState<String>(null)
 
@@ -34,7 +34,7 @@ const GroupCreate: React.FC<GroupCreateProps> = (props) => {
             }), promiseResults)
             toast('Group created! 😎')
             props.getGroups()
-            props.setGroupCreateOpen('close')
+            props.setCreateGroupOpen('close')
         } catch (err) {
             toast('Error 😦😦')
             console.log(err)
@@ -44,7 +44,7 @@ const GroupCreate: React.FC<GroupCreateProps> = (props) => {
     return (
         <Dialog 
             open={open} 
-            onClose={() => props.setGroupCreateOpen('close')}
+            onClose={() => props.setCreateGroupOpen('close')}
         >
             <DialogTitle>Create New Group</DialogTitle>
             <DialogContent>
@@ -59,11 +59,11 @@ const GroupCreate: React.FC<GroupCreateProps> = (props) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => props.setGroupCreateOpen('close')}>Cancel</Button>
+                <Button onClick={() => props.setCreateGroupOpen('close')}>Cancel</Button>
                 <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-export default GroupCreate;
+export default CreateGroup;

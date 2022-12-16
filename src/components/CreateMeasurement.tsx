@@ -11,13 +11,13 @@ import { toast } from "react-toastify";
 import api from "../lib/api";
 import promiseResults from "../lib/toastPromiseDefault";
 
-interface MeasurementCreateProps {
+interface CreateMeasurementProps {
     open: String;
-    setMeasurementCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateMeasurementOpen: React.Dispatch<React.SetStateAction<string>>;
     getMeasurements: () => void;
 }
 
-const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
+const CreateMeasurement: React.FC<CreateMeasurementProps> = (props) => {
     const open = props.open == "measurement";
     const [description, setDescription] = React.useState<String>(null)
     const [initials, setInitials] = React.useState<String>(null)
@@ -37,7 +37,7 @@ const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
             }), promiseResults)
             toast('Measument created! 😎')
             props.getMeasurements()
-            props.setMeasurementCreateOpen('closed')
+            props.setCreateMeasurementOpen('closed')
         } catch (err) {
             toast('Error 😦😦')
             console.log(err)
@@ -47,7 +47,7 @@ const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
     return (
         <Dialog 
             open={open} 
-            onClose={() => props.setMeasurementCreateOpen('close')}
+            onClose={() => props.setCreateMeasurementOpen('close')}
         >
             <DialogTitle>Create New Measurement</DialogTitle>
             <DialogContent 
@@ -76,11 +76,11 @@ const MeasurementCreate: React.FC<MeasurementCreateProps> = (props) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => props.setMeasurementCreateOpen('close')}>Cancel</Button>
+                <Button onClick={() => props.setCreateMeasurementOpen('close')}>Cancel</Button>
                 <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-export default MeasurementCreate;
+export default CreateMeasurement;

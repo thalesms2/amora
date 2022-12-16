@@ -15,9 +15,9 @@ import { toast } from "react-toastify";
 
 import api from "../lib/api";
 
-const BrandCreate = lazy(() => import("./components/BrandCreate"))
-const GroupCreate = lazy(() => import("./components/GroupCreate"))
-const MeasurementCreate = lazy(() => import("./components/MeasurementCreate"))
+const CreateBrand = lazy(() => import("../components/CreateBrand"))
+const CreateGroup = lazy(() => import("../components/CreateGroup"))
+const CreateMeasurement = lazy(() => import("../components/CreateMeasurement"))
 
 interface Brand {
     id: number;
@@ -48,13 +48,13 @@ const CreateProduct: React.FC = () => {
     const [brands, setBrands] = React.useState<Brand[]>([]);
     const [groups, setGroups] = React.useState<Group[]>([]);
     const [measurements, setMeasurements] = React.useState<Measurement[]>([]);
-    const [description, setDescription] = React.useState<String>(null);
-    const [cost, setCost] = React.useState<String>(null);
-    const [profit, setProfit] = React.useState<String>(null);
-    const [price, setPrice] = React.useState<String>(null);
-    const [brandValue, setBrandValue] = React.useState<String>(null);
-    const [groupValue, setGroupValue] = React.useState<String>(null);
-    const [measurementValue, setMeasurementValue] = React.useState<String>(null);
+    const [description, setDescription] = React.useState<String>('');
+    const [cost, setCost] = React.useState<String>('');
+    const [profit, setProfit] = React.useState<String>('');
+    const [price, setPrice] = React.useState<String>('');
+    const [brandValue, setBrandValue] = React.useState<String>('');
+    const [groupValue, setGroupValue] = React.useState<String>('');
+    const [measurementValue, setMeasurementValue] = React.useState<String>('');
     const [brandId, setBrandId] = React.useState<Number>(null);
     const [groupId, setGroupId] = React.useState<Number>(null);
     const [measurementId, setMeasurementId] = React.useState<Number>(null);
@@ -151,9 +151,9 @@ const CreateProduct: React.FC = () => {
                 alignContent: "center",
             }}
         >
-            {create === 'brand' ? <BrandCreate getBrands={getBrands} open={create} setBrandCreateOpen={setCreate} />: null}
-            {create === 'group' ? <GroupCreate getGroups={getGroups} open={create} setGroupCreateOpen={setCreate} />: null}
-            {create === 'measurement' ? <MeasurementCreate getMeasurements={getMeasurements} open={create} setMeasurementCreateOpen={setCreate} />: null}
+            {create === 'brand' ? <CreateBrand getBrands={getBrands} open={create} setCreateBrandOpen={setCreate} />: null}
+            {create === 'group' ? <CreateGroup getGroups={getGroups} open={create} setCreateGroupOpen={setCreate} />: null}
+            {create === 'measurement' ? <CreateMeasurement getMeasurements={getMeasurements} open={create} setCreateMeasurementOpen={setCreate} />: null}
             <Typography variant="h3">Create a new product</Typography>
             <Paper
                 elevation={6}

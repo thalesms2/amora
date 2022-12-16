@@ -11,13 +11,13 @@ import { toast } from "react-toastify";
 import api from "../lib/api";
 import promiseResults from '../lib/toastPromiseDefault'
 
-interface BrandCreateProps {
+interface CreateBrandProps {
     open: String;
-    setBrandCreateOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateBrandOpen: React.Dispatch<React.SetStateAction<string>>;
     getBrands: () => void;
 }
 
-const BrandCreate: React.FC<BrandCreateProps> = (props) => {
+const CreateBrand: React.FC<CreateBrandProps> = (props) => {
     const open = props.open == "brand";
     const [description, setDescription] = React.useState<String>(null)
 
@@ -35,7 +35,7 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
             }), promiseResults)
             toast('Brand created! 😎')
             props.getBrands();
-            props.setBrandCreateOpen('closed')
+            props.setCreateBrandOpen('closed')
         } catch (err) {
             toast('Error 😦😦')
         }
@@ -44,7 +44,7 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
     return (
         <Dialog 
             open={open} 
-            onClose={() => props.setBrandCreateOpen('close')}
+            onClose={() => props.setCreateBrandOpen('close')}
         >
             <DialogTitle>Create New Brand</DialogTitle>
             <DialogContent>
@@ -59,11 +59,11 @@ const BrandCreate: React.FC<BrandCreateProps> = (props) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => props.setBrandCreateOpen('close')}>Cancel</Button>
+                <Button onClick={() => props.setCreateBrandOpen('close')}>Cancel</Button>
                 <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-export default BrandCreate;
+export default CreateBrand;

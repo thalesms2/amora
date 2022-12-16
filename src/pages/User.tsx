@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import {
     Typography,
     Box,
@@ -16,8 +16,9 @@ import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import { toast } from "react-toastify";
 
 import api from "../lib/api";
-import UserEdit from '../components/UserEdit'
 import promiseResults from "../lib/toastPromiseDefault";
+
+const EditUser = lazy(() => import("../components/EditUser"))
 
 interface User {
     id: number
@@ -139,7 +140,7 @@ const User: React.FC = () => {
                     })
                 }
             </List>
-            { edit ? <UserEdit id={userEdited} setEdit={setEdit} open={edit} getAllUsers={getAllUsers} /> : null}
+            { edit ? <EditUser id={userEdited} setEdit={setEdit} open={edit} getAllUsers={getAllUsers} /> : null}
         </Box>
     );
 };
