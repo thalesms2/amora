@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
+import { Global, css } from "@emotion/react";
 import {
     IconButton,
     Button,
@@ -7,19 +8,18 @@ import {
     Box,
     Paper,
     useMediaQuery,
-    Tooltip
+    Tooltip,
 } from "@mui/material";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
-import { ToastContainer, Flip } from 'react-toastify'
+import { ToastContainer, Flip } from "react-toastify";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
-import { GlobalStyles } from "../styles/globalstyles";
 import Nav from "./Nav";
 
-const Login = lazy(() => import("./Login"))
-const Sign = lazy(() => import("./Sign"))
+const Login = lazy(() => import("./Login"));
+const Sign = lazy(() => import("./Sign"));
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -47,24 +47,23 @@ const ThemeButton = () => {
 };
 
 const Layout: React.FC = () => {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
     const [mode, setMode] = React.useState<"light" | "dark">(() => {
-        if (localStorage.theme === 'dark' || localStorage.theme === 'light') {
+        if (localStorage.theme === "dark" || localStorage.theme === "light") {
             return localStorage.theme;
-        } 
-        const theme = prefersDarkMode ? 'dark' : 'light';
-        localStorage.setItem('theme', theme);
+        }
+        const theme = prefersDarkMode ? "dark" : "light";
+        localStorage.setItem("theme", theme);
         return theme;
     });
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
                 setMode((prevMode) => {
-                    const newTheme = prevMode === "light" ? "dark" : "light"
-                    localStorage.setItem('theme', newTheme)
-                    return newTheme
-                }
-                );
+                    const newTheme = prevMode === "light" ? "dark" : "light";
+                    localStorage.setItem("theme", newTheme);
+                    return newTheme;
+                });
             },
         }),
         []
@@ -92,10 +91,49 @@ const Layout: React.FC = () => {
     };
     return (
         <ColorModeContext.Provider value={colorMode}>
-            <GlobalStyles />
+            <Global
+                styles={css`
+                    *,
+                    ::before,
+                    ::after {
+                        box-sizing: border-box;
+                        padding: 0;
+                        margin: 0;
+                        vertical-align: baseline;
+                        list-style: none;
+                        border: 0;
+                        font-family: "Roboto", sans-serif;
+                        text-decoration: none;
+                    }
+                    ::-webkit-scrollbar {
+                        width: 8px;
+                    }
+
+                    ::-webkit-scrollbar-track {
+                        background-color: ${mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.light};
+                        border-radius: 8px;
+                    }
+
+                    ::-webkit-scrollbar-thumb {
+                        background-color: #808080;
+                        border-radius: 8px;
+                    }
+                    ::-moz-selection {
+                        /* Code for Firefox */
+                        color: #000;
+                        background: #808080;
+                    }
+
+                    ::selection {
+                        color: #000;
+                        background: #808080;
+                    }
+                `
+                }
+            />
             <ThemeProvider theme={theme}>
                 <ToastContainer
-                    theme={mode == 'dark' ? 'light' : 'dark'}
+                    theme={mode == "dark" ? "light" : "dark"}
                     position="bottom-right"
                     transition={Flip}
                     autoClose={5000}
@@ -112,7 +150,6 @@ const Layout: React.FC = () => {
                         transition: ".4s ease-out",
                     }}
                 >
-                    
                     <Box
                         sx={{
                             display: "flex",
@@ -132,13 +169,15 @@ const Layout: React.FC = () => {
                             )}
                             {login == "logged" ? (
                                 <Tooltip title="Logout">
-                                    <Button 
+                                    <Button
                                         onClick={setLogout}
                                         sx={{
                                             padding: "1em 1.5em",
                                             marginLeft: ".5em",
                                         }}
-                                    >Logout</Button>
+                                    >
+                                        Logout
+                                    </Button>
                                 </Tooltip>
                             ) : (
                                 ""
@@ -146,9 +185,13 @@ const Layout: React.FC = () => {
                             <ThemeButton />
                         </Box>
                     </Box>
-                    <Suspense fallback={""} >
-                        { login === 'login' ? <Login open={login} setLogin={setLogin} /> :  null }
-                        { login === 'sign' ? <Sign open={login} setLogin={setLogin} /> : null }
+                    <Suspense fallback={""}>
+                        {login === "login" ? (
+                            <Login open={login} setLogin={setLogin} />
+                        ) : null}
+                        {login === "sign" ? (
+                            <Sign open={login} setLogin={setLogin} />
+                        ) : null}
                         <Outlet />
                     </Suspense>
                 </Paper>
