@@ -1,0 +1,52 @@
+# SisVendas - Sistema de vendas
+> Front-end
+
+## Tarefas
+- [x] Tema escuro
+- [x] Criar usuário
+- [x] Fazer Login/Logout
+- [ ] Esqueci minha senha
+- [x] Criar novo produto
+    - [ ] Editar produto
+    - [ ] Excluir produto
+- [x] Criar nova marca
+    - [ ] Editar marca
+    - [ ] Excluir marca
+- [x] Criar novo grupo 
+    - [ ] Editar grupo
+    - [ ] Excluir grupo
+- [x] Criar nova unidade de medida
+    - [ ] Editar unidade de medida
+    - [ ] Excluir unidade de medida
+- [x] Consultar todos os produtos
+    - [ ] Pesquisar um produto na consulta
+- [x] Criar novo cliente
+- [ ] Consultar todos os clientes
+- [x] Consultar os Logs
+    - [ ] Pesquisar nos logs
+    - [ ] Filtros tipo e módulo
+- [x] Consultar todos os usuários
+    - [x] Editar e apagar usuários
+    - [ ] Alterar permissões / Tipo de usuário
+    - [ ] Exibir tipo de usuário na consulta
+    - [ ] Pesquisar usuário na consulta
+- [x] Lista de afazeres na Home Page
+    - [ ] Criar, editar e apagar tarefas
+    - [ ] Tornar tarefas exclusivas por usuário salvas e editáveis por usuário Adm
+    - [ ] Pesquisar tarefas
+- [ ] Relatórios
+    - [ ] Clientes por estado
+    - [ ] Comissões por vendedor
+        - [ ] Cadastrar novo vendedor
+            - [ ] Consultar vendedores
+            - [ ] Editar e apagar vendedores
+            - [ ] Pesquisar um vendedor na consulta 
+    - [ ] Vendas por período
+        - [ ] Registro de notas
+- [ ] Alterar preço de custo
+    - [ ] Nota de entrada de fornecedor
+- [ ] Consultar movimentações de estoque
+    - [ ] Cadastro de depositos
+        - [ ] Consultar de depositos
+        - [ ] Editar configurações de depositos
+- [ ] Consultar posição física

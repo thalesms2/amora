@@ -82,7 +82,6 @@ const Layout: React.FC = () => {
         const result = window.sessionStorage.getItem("userId")
             ? "logged"
             : "login";
-        console.log(result);
         return result;
     });
     const setLogout = () => {
