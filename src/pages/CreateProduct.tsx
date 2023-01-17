@@ -288,15 +288,13 @@ const CreateProduct: React.FC = () => {
                             inputProps={{
                                 "aria-label": "profit",
                             }}
+                            label="Profit"
                             sx={{
                                 marginBottom: ".5em",
                                 marginRight: ".5em",
                                 width: "15vw",
                             }}
                         />
-                        <FormHelperText id="outlined-profit-helper-text">
-                            Profit
-                        </FormHelperText>
                     </FormControl>
                     <TextField
                         label="Price"
