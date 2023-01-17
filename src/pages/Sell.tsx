@@ -1,10 +1,17 @@
 import React from 'react'
-import { Typography } from '@mui/material'
+import { Typography, Box, TextField } from '@mui/material'
 
 const Sell: React.FC = () => {
+    const [id, setId] = React.useState('')
+    const [clientId, setClientId] = React.useState('')
+    const [clientName, setClientName] = React.useState('')
+    const [sellerId, setSelleId] = React.useState('')
+    const [sellerName, setSellerName] = React.useState('')
+    const [operation, setOperation] = React.useState('')
+    const [items, setItems] = React.useState([])
 
     return (
-        <div>
+        <Box>
             <Typography
                 variant="h3"
                 sx={{
@@ -13,8 +20,21 @@ const Sell: React.FC = () => {
             >
             Sell
             </Typography>
-            fazendo a venda
-        </div>
+            <TextField
+                autoFocus
+                label="ID"
+                value={id}
+                type="number"
+                onChange={(e) => setId(String(e.target.value))}
+            />
+            <TextField
+                autoFocus
+                label="ID"
+                value={id}
+                type="number"
+                onChange={(e) => setId(String(e.target.value))}
+            />
+        </Box>
     )
 }
 
