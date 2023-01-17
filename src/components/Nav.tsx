@@ -265,6 +265,17 @@ const Nav = () => {
                     "aria-labelledby": "basic-button",
                 }}
             >
+                <Link to="/company/seller/create">
+                    <MenuItem
+                        onClick={handleCompanyClose}
+                        divider
+                        sx={{
+                            color: theme.palette.text.primary,
+                        }}
+                    >
+                        Create a Seller
+                    </MenuItem>
+                </Link>
                 <Link to="/company/log">
                     <MenuItem
                         onClick={handleCompanyClose}
