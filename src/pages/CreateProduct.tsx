@@ -8,7 +8,7 @@ import {
     InputAdornment,
     OutlinedInput,
     FormControl,
-    FormHelperText,
+    InputLabel,
     Button,
 } from "@mui/material";
 import { toast } from "react-toastify";
@@ -275,9 +275,10 @@ const CreateProduct: React.FC = () => {
                         }}
                     />
                     <FormControl variant="outlined">
+                        <InputLabel>Profit</InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-profit"
                             value={profit}
+                            label="Profit"
                             onChange={(e) => setProfit(e.target.value)}
                             endAdornment={
                                 <InputAdornment position="end">
@@ -288,7 +289,6 @@ const CreateProduct: React.FC = () => {
                             inputProps={{
                                 "aria-label": "profit",
                             }}
-                            label="Profit"
                             sx={{
                                 marginBottom: ".5em",
                                 marginRight: ".5em",
