@@ -10,6 +10,7 @@ import {
 import { toast } from "react-toastify";
 import api from "../lib/api";
 import promiseResults from '../lib/toastPromiseDefault'
+import { handleKeydown } from "../lib/formHooks";
 
 interface CreateBrandProps {
     open: String;
@@ -19,13 +20,7 @@ interface CreateBrandProps {
 
 const CreateBrand: React.FC<CreateBrandProps> = (props) => {
     const open = props.open == "brand";
-    const [description, setDescription] = React.useState<String>(null)
-
-    const handleKeydown = async (e: React.KeyboardEvent) => {
-        if (e.code === "Enter" || e.code === "NumpadEnter") {
-            handleSubmit();
-        }
-    };
+    const [description, setDescription] = React.useState('')
 
     const handleSubmit = async () => {
         try {
@@ -38,6 +33,7 @@ const CreateBrand: React.FC<CreateBrandProps> = (props) => {
             props.setCreateBrandOpen('closed')
         } catch (err) {
             toast('Error 😦😦')
+            console.error(err)
         }
     };
 
@@ -53,7 +49,7 @@ const CreateBrand: React.FC<CreateBrandProps> = (props) => {
                     label="Description"
                     type="text"
                     variant="standard"
-                    onKeyDown={handleKeydown}
+                    onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />

@@ -21,7 +21,7 @@
 - [x] Consultar todos os produtos
     - [ ] Pesquisar um produto na consulta
 - [x] Criar novo cliente
-- [ ] Consultar todos os clientes
+    - [x] Consultar todos os clientes
 - [x] Consultar os Logs
     - [ ] Pesquisar nos logs
     - [ ] Filtros tipo e módulo
@@ -37,7 +37,7 @@
 - [ ] Relatórios
     - [ ] Clientes por estado
     - [ ] Comissões por vendedor
-        - [ ] Cadastrar novo vendedor
+        - [x] Cadastrar novo vendedor
             - [ ] Consultar vendedores
             - [ ] Editar e apagar vendedores
             - [ ] Pesquisar um vendedor na consulta 
@@ -46,7 +46,7 @@
 - [ ] Alterar preço de custo
     - [ ] Nota de entrada de fornecedor
 - [ ] Consultar movimentações de estoque
-    - [ ] Cadastro de depositos
+    - [x] Cadastro de depositos
         - [ ] Consultar de depositos
         - [ ] Editar configurações de depositos
 - [ ] Consultar posição física

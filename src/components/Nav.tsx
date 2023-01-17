@@ -134,7 +134,7 @@ const Nav = () => {
                     "aria-labelledby": "basic-button",
                 }}
             >
-                <Link to="/storage">
+                <Link to="/storage/create">
                     <MenuItem
                         onClick={handleStorageClose}
                         divider
@@ -142,7 +142,7 @@ const Nav = () => {
                             color: theme.palette.text.primary,
                         }}
                     >
-                        Consult
+                        Create a deposit
                     </MenuItem>
                 </Link>
                 <Link to="/storage">
@@ -153,7 +153,7 @@ const Nav = () => {
                             color: theme.palette.text.primary,
                         }}
                     >
-                        Create
+                        Consult a deposit
                     </MenuItem>
                 </Link>
             </Menu>

@@ -8,8 +8,10 @@ import {
     DialogActions,
 } from "@mui/material";
 import { toast } from "react-toastify";
+
 import api from "../lib/api";
 import promiseResults from "../lib/toastPromiseDefault";
+import { handleKeydown } from "../lib/formHooks";
 
 interface CreateMeasurementProps {
     open: String;
@@ -19,14 +21,8 @@ interface CreateMeasurementProps {
 
 const CreateMeasurement: React.FC<CreateMeasurementProps> = (props) => {
     const open = props.open == "measurement";
-    const [description, setDescription] = React.useState<String>(null)
-    const [initials, setInitials] = React.useState<String>(null)
-
-    const handleKeydown = async (e: React.KeyboardEvent) => {
-        if (e.code === "Enter" || e.code === "NumpadEnter") {
-            handleSubmit();
-        }
-    };
+    const [description, setDescription] = React.useState<String>('')
+    const [initials, setInitials] = React.useState<String>('')
 
     const handleSubmit = async () => {
         try {
@@ -70,7 +66,7 @@ const CreateMeasurement: React.FC<CreateMeasurementProps> = (props) => {
                     label="Initials"
                     type="text"
                     variant="standard"
-                    onKeyDown={handleKeydown}
+                    onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                     value={initials}
                     onChange={(e) => setInitials(e.target.value)}
                 />

@@ -17,6 +17,7 @@ const User = lazy(() => import("./pages/User"))
 const Shop = lazy(() => import("./pages/Shop"))
 const Client = lazy(() => import("./pages/Client"))
 const CreateSellers = lazy(() => import("./pages/CreateSellers"))
+const CreateDeposit = lazy(() => import("./pages/CreateDeposit"))
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="/storage" element={<Storage />} />
+                <Route path="/storage/create" element={<CreateDeposit />} />
                 <Route path="/product" element={<Product />} />
                 <Route path="/product/create" element={<CreateProduct />} />
                 <Route path="/sell" element={<Sell />} />

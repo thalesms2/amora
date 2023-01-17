@@ -8,8 +8,10 @@ import {
     DialogActions,
 } from "@mui/material";
 import { toast } from "react-toastify";
+
 import api from "../lib/api";
 import promiseResults from '../lib/toastPromiseDefault'
+import { handleKeydown } from "../lib/formHooks";
 
 interface CreateGroupProps {
     open: String;
@@ -20,12 +22,6 @@ interface CreateGroupProps {
 const CreateGroup: React.FC<CreateGroupProps> = (props) => {
     const open = props.open == "group";
     const [description, setDescription] = React.useState<String>(null)
-
-    const handleKeydown = async (e: React.KeyboardEvent) => {
-        if (e.code === "Enter" || e.code === "NumpadEnter") {
-            handleSubmit();
-        }
-    };
 
     const handleSubmit = async () => {
         try {
@@ -53,7 +49,7 @@ const CreateGroup: React.FC<CreateGroupProps> = (props) => {
                     label="Description"
                     type="text"
                     variant="standard"
-                    onKeyDown={handleKeydown}
+                    onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />

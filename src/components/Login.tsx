@@ -8,8 +8,10 @@ import {
     DialogActions,
 } from "@mui/material";
 import { toast } from "react-toastify";
+
 import api from "../lib/api";
 import promiseResults from "../lib/toastPromiseDefault";
+import { handleKeydown } from "../lib/formHooks";
 
 interface LoginProps {
     open: String;
@@ -20,28 +22,26 @@ const Login: React.FC<LoginProps> = (props) => {
     const [id, setId] = React.useState<String>('');
     const [password, setPassword] = React.useState<String>('');
     const open = props.open == "login";
-
-    const handleKeydown = async(e: React.KeyboardEvent) => {
-        if(e.code === 'Enter' || e.code === 'NumpadEnter') {
-            handleSubmit(e)
-        }
-    }
     
-    const handleSubmit = async (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        const response = await toast.promise(
-            api.post("/user", {
-                id: Number(id),
-                password: password,
-            }), promiseResults);
-        if (response.data.login) {
-            window.sessionStorage.setItem("userId", response.data.id);
-            window.sessionStorage.setItem("name", response.data.name);
-            window.sessionStorage.setItem("login", response.data.login);
-            toast("Logged! 🥳");
-            props.setLogin("logged");
-        } else {
-            toast("Wrong ID or Password 🥶");
+    const handleSubmit = async () => {
+        try{
+            const response = await toast.promise(
+                api.post("/user", {
+                    id: Number(id),
+                    password: password,
+                }), promiseResults);
+                if (response.data.login) {
+                    window.sessionStorage.setItem("userId", response.data.id);
+                    window.sessionStorage.setItem("name", response.data.name);
+                    window.sessionStorage.setItem("login", response.data.login);
+                    toast("Logged! 🥳");
+                    props.setLogin("logged");
+                } else {
+                    toast("Wrong ID or Password 🥶");
+                }
+        } catch(err) {
+            toast("Error")
+            console.error(err)
         }
     };
     const handleSign = () => {
@@ -60,7 +60,7 @@ const Login: React.FC<LoginProps> = (props) => {
                     type="text"
                     fullWidth
                     variant="standard"
-                    onKeyDown={handleKeydown}
+                    onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                 />
                 <TextField
                     margin="dense"
@@ -70,7 +70,7 @@ const Login: React.FC<LoginProps> = (props) => {
                     type="password"
                     fullWidth
                     variant="standard"
-                    onKeyDown={handleKeydown}
+                    onKeyDown={(e)=> handleKeydown(e, handleSubmit)}
                 />
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>
