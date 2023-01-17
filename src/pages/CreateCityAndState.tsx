@@ -17,6 +17,9 @@ interface State {
     code: String
     name: String
     citys: City[]
+    key: String
+    label: String
+    content: String
 }
 const CreateCityAndState: React.FC = () => {
     const [states, setStates] = React.useState<State[]>([])
@@ -59,9 +62,7 @@ const CreateCityAndState: React.FC = () => {
                 renderInput={(params) => (
                     <TextField {...params} label="State"></TextField>
                 )}
-            >
-                
-            </Autocomplete>
+            />
         </Box>
     )
 }
