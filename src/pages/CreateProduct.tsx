@@ -6,7 +6,7 @@ import {
     TextField,
     Autocomplete,
     InputAdornment,
-    OutlinedInput,
+    Input,
     FormControl,
     InputLabel,
     Button,
@@ -38,8 +38,8 @@ interface Measurement {
 const ButtonStyle = (position?: String) =>{
     return {
         width: "15vw",
-        marginBottom: ".5em",
-        marginRight: position == 'right' ? ".5em" : '',
+        marginBottom: "1vw",
+        marginRight: position == 'right' ? "1vw" : '',
         height: '10vh',
     }
 } 
@@ -168,12 +168,12 @@ const CreateProduct: React.FC = () => {
             >
                 <TextField
                     label="Description"
-                    variant="outlined"
+                    variant="standard"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     sx={{
-                        marginBottom: ".5em",
-                        width: "50vw",
+                        marginBottom: "1vw",
+                        width: "47vw",
                     }}
                 />
                 <Box
@@ -190,15 +190,15 @@ const CreateProduct: React.FC = () => {
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{
                             width: "15vw",
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
                         }}
                         onChange={(event: any, brand:any) => {
                             setBrandId(brand.content);
                             setBrandValue(brand.label)
                         }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Brands"></TextField>
+                            <TextField {...params} label="Brands" variant="standard" ></TextField>
                         )}
                     />
                     <Autocomplete
@@ -209,15 +209,15 @@ const CreateProduct: React.FC = () => {
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{
                             width: "15vw",
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
                         }}
                         onChange={(event: any, group:any) => {
                             setGroupId(group.content);
                             setGroupValue(group.label);
                         }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Groups"></TextField>
+                            <TextField {...params} variant="standard" label="Groups"></TextField>
                         )}
                     />
                     <Autocomplete
@@ -228,14 +228,14 @@ const CreateProduct: React.FC = () => {
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         sx={{
                             width: "15vw",
-                            marginBottom: ".5em",
+                            marginBottom: "1vw",
                         }}
                         onChange={(event: any, measurement:any) => {
                             setMeasurementId(measurement.content);
                             setMeasurementValue(measurement.label)
                         }}
                         renderInput={(params) => (
-                            <TextField {...params} label="Measurements"></TextField>
+                            <TextField {...params} variant="standard" label="Measurements"></TextField>
                         )}
                     />
                 </Box>
@@ -247,17 +247,17 @@ const CreateProduct: React.FC = () => {
                 >
                     <Button
                         onClick={() => setCreate('brand')}
-                        variant="outlined"
+                        variant="contained"
                         sx={ ButtonStyle('right') }
                     >New Brand</Button>
                     <Button
                         onClick={() => setCreate('group')}
-                        variant="outlined"
+                        variant="contained"
                         sx={ ButtonStyle('right') }
                     >New Group</Button>
                     <Button
                         onClick={() => setCreate('measurement')}
-                        variant="outlined"
+                        variant="contained"
                         sx={ ButtonStyle() }
                     >New Measurement</Button>
                 </Box>
@@ -265,33 +265,32 @@ const CreateProduct: React.FC = () => {
                     <TextField
                         label="Cost"
                         type="number"
-                        variant="outlined"
+                        variant="standard"
                         value={cost}
                         onChange={(e) => setCost(e.target.value)}
                         sx={{
                             width: "15vw",
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
                         }}
                     />
-                    <FormControl variant="outlined">
+                    <FormControl variant="standard">
                         <InputLabel>Profit</InputLabel>
-                        <OutlinedInput
+                        <Input
                             value={profit}
-                            label="Profit"
                             onChange={(e) => setProfit(e.target.value)}
                             endAdornment={
                                 <InputAdornment position="end">
                                     %
                                 </InputAdornment>
                             }
-                            aria-describedby="outlined-profit-helper-text"
+                            aria-describedby="standard-profit-helper-text"
                             inputProps={{
                                 "aria-label": "profit",
                             }}
                             sx={{
-                                marginBottom: ".5em",
-                                marginRight: ".5em",
+                                marginBottom: "1vw",
+                                marginRight: "1vw",
                                 width: "15vw",
                             }}
                         />
@@ -299,7 +298,7 @@ const CreateProduct: React.FC = () => {
                     <TextField
                         label="Price"
                         type="number"
-                        variant="outlined"
+                        variant="standard"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         sx={{
@@ -313,10 +312,10 @@ const CreateProduct: React.FC = () => {
                     }}
                 >
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         size="large"
                         sx={{
-                            marginRight: ".5em",
+                            marginRight: "1vw",
                         }}
                         onClick={handleClear}
                     >
