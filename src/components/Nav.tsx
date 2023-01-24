@@ -102,6 +102,11 @@ const Nav = () => {
                 />
                 <NavItemCell
                     setStatus={setCompany}
+                    to="/company/provider/create"
+                    title="Create a provider"
+                />
+                <NavItemCell
+                    setStatus={setCompany}
                     to="/company/log"
                     title="Log"
                 />

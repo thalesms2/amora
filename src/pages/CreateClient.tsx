@@ -21,18 +21,18 @@ import {
 import api from "../lib/api";
 
 const CreateClient: React.FC = () => {
-    const [id, setId] = React.useState<Number>(null);
-    const [name, setName] = React.useState<String>(null);
-    const [cpf, setCpf] = React.useState<String>(null);
-    const [cityId, setCityId] = React.useState<Number>(null);
-    const [state, setState] = React.useState<Number>(null);
-    const [street, setStreet] = React.useState<String>(null);
-    const [number, setNumber] = React.useState<String>(null);
-    const [neighborhood, setNeighborhood] = React.useState<String>(null);
-    const [cep, setCep] = React.useState<String>(null);
-    const [complement, setComplement] = React.useState<String>(null);
-    const [birth, setBirth] = React.useState<String>(null);
-    const [priceTable, setPriceTable] = React.useState<Number>(null);
+    const [id, setId] = React.useState<number>(null);
+    const [name, setName] = React.useState<string>(null);
+    const [cpf, setCpf] = React.useState<string>(null);
+    const [cityId, setCityId] = React.useState<number>(null);
+    const [state, setState] = React.useState<number>(null);
+    const [street, setStreet] = React.useState<string>(null);
+    const [number, setNumber] = React.useState<string>(null);
+    const [neighborhood, setNeighborhood] = React.useState<string>(null);
+    const [cep, setCep] = React.useState<string>(null);
+    const [complement, setComplement] = React.useState<string>(null);
+    const [birth, setBirth] = React.useState<string>(null);
+    const [priceTable, setPriceTable] = React.useState<number>(null);
 
     return (
         <Box
