@@ -6,7 +6,7 @@ import {
 } from '@mui/material'
 import { toast } from 'react-toastify';
 
-import api from "../lib/api";
+import api from "../../lib/api";
 
 interface City {
     code: String

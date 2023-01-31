@@ -11,13 +11,14 @@ import {
     InputLabel,
     Button,
 } from "@mui/material";
+import { useOutletContext } from 'react-router-dom'
 import { toast } from "react-toastify";
 
-import api from "../lib/api";
+import api from "../../lib/api";
 
-const CreateBrand = lazy(() => import("../components/CreateBrand"))
-const CreateGroup = lazy(() => import("../components/CreateGroup"))
-const CreateMeasurement = lazy(() => import("../components/CreateMeasurement"))
+const CreateBrand = lazy(() => import("../../components/CreateBrand"))
+const CreateGroup = lazy(() => import("../../components/CreateGroup"))
+const CreateMeasurement = lazy(() => import("../../components/CreateMeasurement"))
 
 interface Brand {
     id: number;
@@ -58,7 +59,8 @@ const CreateProduct: React.FC = () => {
     const [brandId, setBrandId] = React.useState<Number>(null);
     const [groupId, setGroupId] = React.useState<Number>(null);
     const [measurementId, setMeasurementId] = React.useState<Number>(null);
-    const [create, setCreate] = React.useState<"brand" | "group" | "measurement" |"closed">('closed')
+    // const [create, setCreate] = React.useState<"brand" | "group" | "measurement" |"closed">('closed')
+    const [create, setCreate] = useOutletContext();
     async function getBrands() {
         try {
             const { data } = await api.get("/brand")

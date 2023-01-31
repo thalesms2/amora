@@ -31,8 +31,8 @@ import {
 } from "@mui/material";
 import { toast } from 'react-toastify'
 import React from "react";
-import api from "../lib/api";
-import promiseResults from "../lib/toastPromiseDefault";
+import api from "../../lib/api";
+import promiseResults from "../../lib/toastPromiseDefault";
 
 interface Product {
     id: number;
