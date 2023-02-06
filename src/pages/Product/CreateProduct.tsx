@@ -11,9 +11,9 @@ import {
     InputLabel,
     Button,
 } from "@mui/material";
-import { useOutletContext } from 'react-router-dom'
 import { toast } from "react-toastify";
 
+import { usePopup } from "../../lib/usePopup";
 import api from "../../lib/api";
 
 const CreateBrand = lazy(() => import("../../components/CreateBrand"))
@@ -60,7 +60,7 @@ const CreateProduct: React.FC = () => {
     const [groupId, setGroupId] = React.useState<Number>(null);
     const [measurementId, setMeasurementId] = React.useState<Number>(null);
     // const [create, setCreate] = React.useState<"brand" | "group" | "measurement" |"closed">('closed')
-    const [create, setCreate] = useOutletContext();
+    const [create, setCreate] = usePopup();
     async function getBrands() {
         try {
             const { data } = await api.get("/brand")
