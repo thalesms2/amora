@@ -1,22 +1,52 @@
 import React, { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { Global, css } from "@emotion/react";
-import { Button, Typography, Box, Paper, Tooltip } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import { Button, Typography, Box, Paper, Tooltip, useMediaQuery } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ToastContainer, Flip } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import Nav from "./Nav";
 import layoutHooks from "../hooks/layoutHooks";
-import useTheme from "../hooks/useTheme";
 import ThemeButton from "./ThemeButton";
 
 const Login = lazy(() => import("./Login"));
 const Sign = lazy(() => import("./Sign"));
 
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
 const Layout: React.FC = () => {
-    const { ColorModeContext, colorMode, theme, mode } = useTheme();
+    const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+    const [mode, setMode] = React.useState<"light" | "dark">(() => {
+        if (localStorage.theme === "dark" || localStorage.theme === "light") {
+            return localStorage.theme;
+        }
+        const theme = prefersDarkMode ? "dark" : "light";
+        localStorage.setItem("theme", theme);
+        return theme;
+    });
+    const colorMode = React.useMemo(
+        () => ({
+            toggleColorMode: () => {
+                setMode((prevMode) => {
+                    const newTheme = prevMode === "light" ? "dark" : "light";
+                    localStorage.setItem("theme", newTheme);
+                    return newTheme;
+                });
+            },
+        }),
+        []
+    );
+    const theme = React.useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode,
+                },
+            }),
+        [mode]
+    );
     const { login, setLogout, setLogin, popUpStatus, setPopUpStatus } = layoutHooks()
     return (
         <ColorModeContext.Provider value={colorMode}>
@@ -112,7 +142,7 @@ const Layout: React.FC = () => {
                             ) : (
                                 ""
                             )}
-                            <ThemeButton />
+                            <ThemeButton theme={theme} colorMode={colorMode} />
                         </Box>
                     </Box>
                     <Suspense fallback={""}>
