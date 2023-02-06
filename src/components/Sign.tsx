@@ -29,7 +29,7 @@ const Sign: React.FC<SignProps> = (props) => {
     const [id, setId] = React.useState<Number>(null);
     const [name, setName] = React.useState<String>(null);
     const [password, setPassword] = React.useState<String>(null);
-    const [type, setType] = React.useState<"admin" | "normal" | "null">(
+    const [type, setType] = React.useState<"admin" | "normal">(
         "normal"
     );
     const open = props.open == "sign";
@@ -55,11 +55,7 @@ const Sign: React.FC<SignProps> = (props) => {
         props.setLogin("login");
     };
     const handleChangeType = (input) => {
-        if(type === input) {
-            setType('null')
-        } else {
-            setType(input)
-        }
+        setType(input)
     };
 
     return (

@@ -60,7 +60,6 @@ const Login: React.FC<LoginProps> = (props) => {
                     type="text"
                     fullWidth
                     variant="standard"
-                    onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                 />
                 <TextField
                     margin="dense"

@@ -19,20 +19,70 @@ import {
     Button,
 } from "@mui/material";
 import api from "../../../hooks/api";
+import { toast } from "react-toastify";
+
+interface City {
+    code: number;
+    name: string;
+}
+
+interface State {
+    code: string;
+    name: string;
+}
 
 const CreateClient: React.FC = () => {
-    const [id, setId] = React.useState<number>(null);
-    const [name, setName] = React.useState<string>(null);
-    const [cpf, setCpf] = React.useState<string>(null);
-    const [cityId, setCityId] = React.useState<number>(null);
-    const [state, setState] = React.useState<number>(null);
-    const [street, setStreet] = React.useState<string>(null);
-    const [number, setNumber] = React.useState<string>(null);
-    const [neighborhood, setNeighborhood] = React.useState<string>(null);
-    const [cep, setCep] = React.useState<string>(null);
-    const [complement, setComplement] = React.useState<string>(null);
-    const [birth, setBirth] = React.useState<string>(null);
-    const [priceTable, setPriceTable] = React.useState<number>(null);
+    const [id, setId] = React.useState("");
+    const [name, setName] = React.useState<string>("");
+    const [cpf, setCpf] = React.useState<string>("");
+    const [street, setStreet] = React.useState<string>("");
+    const [number, setNumber] = React.useState<string>("");
+    const [neighborhood, setNeighborhood] = React.useState<string>("");
+    const [cep, setCep] = React.useState<string>("");
+    const [complement, setComplement] = React.useState<string>("");
+    const [cityValue, setCityValue] = React.useState("");
+    const [cityCode, setCityCode] = React.useState<Number>(null);
+    const [stateValue, setStateValue] = React.useState("");
+    const [stateCode, setStateCode] = React.useState<Number>(null);
+    const [citys, setCitys] = React.useState<City[]>([]);
+    const [states, setStates] = React.useState<State[]>([]);
+
+    async function getCitys() {
+        try {
+            const { data } = await api.get("/city");
+            const res: any = [];
+            data.map((city: City) => {
+                res.push({
+                    key: `${city.code} - ${city.name}`,
+                    label: city.name,
+                    content: city.code,
+                });
+            });
+            setCitys(res);
+        } catch (err) {
+            toast("Error to get citys 😦");
+        }
+    }
+    async function getStates() {
+        try {
+            const { data } = await api.get("/state");
+            const res: any = [];
+            data.map((state: State) => {
+                res.push({
+                    key: `${state.code} - ${state.name}`,
+                    label: state.name,
+                    content: state.code,
+                });
+            });
+            setStates(res);
+        } catch (err) {
+            toast("Error to get states 😦");
+        }
+    }
+    React.useEffect(() => {
+        getStates();
+        getCitys();
+    }, []);
 
     return (
         <Box
@@ -59,12 +109,13 @@ const CreateClient: React.FC = () => {
                     <TextField
                         label="ID"
                         value={id}
-                        onChange={(e) => setId(Number(e.target.value))}
+                        onChange={(e) => setId(String(e.target.value))}
                         variant="standard"
                         autoFocus
                         sx={{
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                            width: "5vw",
                         }}
                     />
                     <TextField
@@ -73,8 +124,9 @@ const CreateClient: React.FC = () => {
                         onChange={(e) => setName(e.target.value)}
                         variant="standard"
                         sx={{
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                            width: "30vw",
                         }}
                     />
                     <TextField
@@ -83,39 +135,100 @@ const CreateClient: React.FC = () => {
                         label="CPF"
                         variant="standard"
                         sx={{
-                            marginBottom: ".5em",
+                            marginBottom: "1vw",
+                            width: "10w",
+                        }}
+                    />
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                    }}
+                >
+                    <TextField
+                        value={cep}
+                        onChange={(e) => setCep(e.target.value)}
+                        label="CEP"
+                        variant="standard"
+                        sx={{
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                            width: "8vw",
+                        }}
+                    />
+                    <Autocomplete
+                        disablePortal
+                        disableClearable
+                        options={states}
+                        value={stateValue}
+                        isOptionEqualToValue={(option, value) =>
+                            option.id === value.id
+                        }
+                        sx={{
+                            width: "12vw",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                        }}
+                        onChange={(event: any, state: any) => {
+                            setStateCode(state.content);
+                            setStateValue(state.label);
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="States"
+                                variant="standard"
+                            ></TextField>
+                        )}
+                    />
+                    <Autocomplete
+                        disablePortal
+                        disableClearable
+                        options={citys}
+                        value={cityValue}
+                        isOptionEqualToValue={(option, value) =>
+                            option.id === value.id
+                        }
+                        sx={{
+                            width: "10vw",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                        }}
+                        onChange={(event: any, city: any) => {
+                            setCityCode(city.content);
+                            setCityValue(city.label);
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Citys"
+                                variant="standard"
+                            ></TextField>
+                        )}
+                    />
+
+                    <TextField
+                        value={neighborhood}
+                        onChange={(e) => setNeighborhood(e.target.value)}
+                        label="Neighborhood"
+                        variant="standard"
+                        sx={{
+                            marginBottom: "1vw",
+                            width: "17.5vw",
                         }}
                     />
                 </Box>
                 <Box>
-                    <TextField
-                        value={cityId}
-                        onChange={(e) => setCityId(Number(e.target.value))}
-                        label="City"
-                        variant="standard"
-                        sx={{
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
-                        }}
-                    />
-                    <TextField
-                        value={state}
-                        onChange={(e) => setState(Number(e.target.value))}
-                        label="State"
-                        variant="standard"
-                        sx={{
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
-                        }}
-                    />
                     <TextField
                         value={street}
                         onChange={(e) => setStreet(e.target.value)}
                         label="Street"
                         variant="standard"
                         sx={{
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                            width: "20vw",
                         }}
                     />
                     <TextField
@@ -124,29 +237,9 @@ const CreateClient: React.FC = () => {
                         label="Number"
                         variant="standard"
                         sx={{
-                            marginBottom: ".5em",
-                        }}
-                    />
-                </Box>
-                <Box>
-                    <TextField
-                        value={neighborhood}
-                        onChange={(e) => setNeighborhood(e.target.value)}
-                        label="Neighborhood"
-                        variant="standard"
-                        sx={{
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
-                        }}
-                    />
-                    <TextField
-                        value={cep}
-                        onChange={(e) => setCep(e.target.value)}
-                        label="CEP"
-                        variant="standard"
-                        sx={{
-                            marginBottom: ".5em",
-                            marginRight: ".5em",
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                            width: "5vw",
                         }}
                     />
                     <TextField
@@ -155,22 +248,11 @@ const CreateClient: React.FC = () => {
                         label="Complement"
                         variant="standard"
                         sx={{
-                            marginBottom: ".5em",
+                            marginBottom: "1vw",
+                            width: "23.5vw",
                         }}
                     />
                 </Box>
-                <TextField 
-                    label="Birth" 
-                    variant="standard" 
-                    value={birth}
-                    onChange={(e) => setBirth(e.target.value)}
-                />
-                <TextField 
-                    label="Price Table" 
-                    variant="standard" 
-                    value={priceTable}
-                    onChange={(e) => setPriceTable(Number(e.target.value))}
-                />
                 <Box
                     sx={{
                         alignSelf: "flex-end",

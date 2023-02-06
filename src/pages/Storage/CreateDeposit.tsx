@@ -13,9 +13,10 @@ const CreateDeposit: React.FC = () => {
 
     const handleSubmit = async () => {
         try{
-            const response = await toast.promise(api.post("/deposit", {
-                id: Number,
-                description: description,
+            await toast.promise(api.post("/storage", {
+                id: Number(id),
+                name: String(name),
+                description: String(description),
                 userId: window.sessionStorage.getItem('userId')
             }), promiseResults)
             toast('Deposit created 🥳')
