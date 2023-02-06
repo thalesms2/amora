@@ -2,12 +2,11 @@ import React from "react";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { IconButton, Tooltip } from "@mui/material";
-import themeHooks from '../hooks/themeHooks'
-import { useTheme } from "@mui/material/styles";
+import useTheme from '../hooks/useTheme'
+
 
 const ThemeButton: React.FC = () => {
-    const { colorMode } = themeHooks()
-    const theme = useTheme()
+    const { theme, colorMode } = useTheme()
     return (
         <Tooltip title="Change theme">
             <IconButton

@@ -4,21 +4,19 @@ import { Global, css } from "@emotion/react";
 import { Button, Typography, Box, Paper, Tooltip } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { ToastContainer, Flip } from "react-toastify";
-import { useTheme } from "@mui/material/styles";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import Nav from "./Nav";
 import layoutHooks from "../hooks/layoutHooks";
-import themeHooks from "../hooks/themeHooks";
+import useTheme from "../hooks/useTheme";
 import ThemeButton from "./ThemeButton";
 
 const Login = lazy(() => import("./Login"));
 const Sign = lazy(() => import("./Sign"));
 
 const Layout: React.FC = () => {
-    const theme = useTheme()
-    const { ColorModeContext, colorMode, mode } = themeHooks();
+    const { ColorModeContext, colorMode, theme, mode } = useTheme();
     const { login, setLogout, setLogin, popUpStatus, setPopUpStatus } = layoutHooks()
     return (
         <ColorModeContext.Provider value={colorMode}>
