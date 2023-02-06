@@ -22,8 +22,8 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 
-import promiseResults from "../lib/toastPromiseDefault";
-import api from "../lib/api";
+import promiseResults from "../../../hooks/toastPromiseDefault";
+import api from "../../../hooks/api";
 
 interface Client {
     id: string;

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import api from "../lib/api";
-import promiseResults from "../lib/toastPromiseDefault";
+import api from "../../hooks/api";
+import promiseResults from "../../hooks/toastPromiseDefault";
 
 const Clear: React.FC = () => {
     const clearLogs = async () => {

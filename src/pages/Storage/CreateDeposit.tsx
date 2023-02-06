@@ -2,9 +2,9 @@ import React from "react";
 import { Box, TextField, Button, Typography, Paper } from "@mui/material";
 import { toast } from "react-toastify";
 
-import promiseResults from '../lib/toastPromiseDefault'
-import api from "../lib/api";
-import { handleKeydown } from "../lib/formHooks";
+import promiseResults from '../../hooks/toastPromiseDefault'
+import api from "../../hooks/api";
+import { handleKeydown } from "../../hooks/formHooks";
 
 const CreateDeposit: React.FC = () => {
     const [id, setId] = React.useState("");
