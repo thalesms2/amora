@@ -21,11 +21,13 @@ interface CreateBrandProps {
 
 const CreateBrand: React.FC<CreateBrandProps> = (props) => {
     const open = props.open == "brand";
+    const [id, setId] = React.useState('')
     const [description, setDescription] = React.useState('')
 
     const handleSubmit = async () => {
         try {
-            const response = await toast.promise(api.post("/brand", {
+            await toast.promise(api.post("/brand", {
+                id: id,
                 description: description,
                 userId: window.sessionStorage.getItem('userId')
             }), promiseResults)
@@ -47,6 +49,13 @@ const CreateBrand: React.FC<CreateBrandProps> = (props) => {
             <DialogContent>
                 <TextField
                     autoFocus
+                    label="ID"
+                    type="number"
+                    variant="standard"
+                    value={id}
+                    onChange={(e) => setId(String(e.target.value))}
+                />
+                <TextField
                     label="Description"
                     type="text"
                     variant="standard"

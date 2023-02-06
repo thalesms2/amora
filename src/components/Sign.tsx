@@ -44,7 +44,7 @@ const Sign: React.FC<SignProps> = (props) => {
                 type: type,
             }), promiseResults);
         if (response.data.sucess) {
-            toast(`Signed up Id - ${response.data.create.id} 💾`);
+            toast(`Signed up Id - ${response.data.user.id} 💾`);
             props.setLogin("login");
         } else {
             toast("Error ⚠️");

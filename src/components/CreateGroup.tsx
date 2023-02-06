@@ -21,11 +21,13 @@ interface CreateGroupProps {
 
 const CreateGroup: React.FC<CreateGroupProps> = (props) => {
     const open = props.open == "group";
-    const [description, setDescription] = React.useState<String>(null)
+    const [id, setId] = React.useState('')
+    const [description, setDescription] = React.useState('')
 
     const handleSubmit = async () => {
         try {
-            const response = await toast.promise(api.post("/group", {
+            await toast.promise(api.post("/group", {
+                id: id,
                 description: description,
             }), promiseResults)
             toast('Group created! 😎')
@@ -46,6 +48,13 @@ const CreateGroup: React.FC<CreateGroupProps> = (props) => {
             <DialogContent>
                 <TextField
                     autoFocus
+                    label="ID"
+                    type="number"
+                    variant="standard"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                />
+                <TextField
                     label="Description"
                     type="text"
                     variant="standard"
