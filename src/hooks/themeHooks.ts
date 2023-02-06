@@ -4,7 +4,7 @@ import { useMediaQuery } from "@mui/material";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
-const useTheme = () => {
+const themeHooks = () => {
     const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
     const [mode, setMode] = React.useState<"light" | "dark">(() => {
         if (localStorage.theme === "dark" || localStorage.theme === "light") {
@@ -38,4 +38,4 @@ const useTheme = () => {
     return { ColorModeContext, theme, mode, setMode, colorMode };
 };
 
-export default useTheme;
+export default themeHooks;
