@@ -53,6 +53,10 @@ const CreateBrand: React.FC<CreateBrandProps> = (props) => {
                     type="number"
                     variant="standard"
                     value={id}
+                    sx={{
+                        marginRight: '1vw',
+                        width: '5vw',
+                    }}
                     onChange={(e) => setId(String(e.target.value))}
                 />
                 <TextField
@@ -61,6 +65,9 @@ const CreateBrand: React.FC<CreateBrandProps> = (props) => {
                     variant="standard"
                     onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                     value={description}
+                    sx={{
+                        width: '20vw',
+                    }}
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </DialogContent>

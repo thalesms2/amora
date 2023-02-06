@@ -29,6 +29,7 @@ const CreateGroup: React.FC<CreateGroupProps> = (props) => {
             await toast.promise(api.post("/group", {
                 id: id,
                 description: description,
+                userId: window.sessionStorage.getItem('userId'),
             }), promiseResults)
             toast('Group created! 😎')
             props.getGroups()
@@ -52,12 +53,19 @@ const CreateGroup: React.FC<CreateGroupProps> = (props) => {
                     type="number"
                     variant="standard"
                     value={id}
+                    sx={{
+                        marginRight: '1vw',
+                        width: '5vw',
+                    }}
                     onChange={(e) => setId(e.target.value)}
                 />
                 <TextField
                     label="Description"
                     type="text"
                     variant="standard"
+                    sx={{
+                        width: '20vw',
+                    }}
                     onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}

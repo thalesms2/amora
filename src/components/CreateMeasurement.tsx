@@ -6,6 +6,7 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
+    Box,
 } from "@mui/material";
 import { toast } from "react-toastify";
 
@@ -21,44 +22,57 @@ interface CreateMeasurementProps {
 
 const CreateMeasurement: React.FC<CreateMeasurementProps> = (props) => {
     const open = props.open == "measurement";
-    const [description, setDescription] = React.useState<String>('')
-    const [initials, setInitials] = React.useState<String>('')
+    const [id, setId] = React.useState("");
+    const [description, setDescription] = React.useState("");
+    const [initials, setInitials] = React.useState("");
 
     const handleSubmit = async () => {
         try {
-            const response = await toast.promise(api.post("/measurement", {
-                description: description,
-                initials: initials,
-                userId: window.sessionStorage.getItem('userId')
-            }), promiseResults)
-            toast('Measument created! 😎')
-            props.getMeasurements()
-            props.setCreateMeasurementOpen('closed')
+            await toast.promise(
+                api.post("/measurement", {
+                    id: id,
+                    description: description,
+                    initials: initials,
+                    userId: window.sessionStorage.getItem("userId"),
+                }),
+                promiseResults
+            );
+            toast("Measument created! 😎");
+            props.getMeasurements();
+            props.setCreateMeasurementOpen("closed");
         } catch (err) {
-            toast('Error 😦😦')
-            console.log(err)
+            toast("Error 😦😦");
+            console.log(err);
         }
     };
 
     return (
-        <Dialog 
-            open={open} 
-            onClose={() => props.setCreateMeasurementOpen('close')}
+        <Dialog
+            open={open}
+            onClose={() => props.setCreateMeasurementOpen("close")}
         >
             <DialogTitle>Create New Measurement</DialogTitle>
-            <DialogContent 
-                sx={{ 
-                    display: "flex",
-                    flexDirection: "column",
-            }}>
+            <DialogContent>
                 <TextField
                     autoFocus
+                    label="ID"
+                    type="number"
+                    variant="standard"
+                    value={id}
+                    sx={{
+                        marginRight: "1vw",
+                        width: "5vw",
+                    }}
+                    onChange={(e) => setId(e.target.value)}
+                />
+                <TextField
                     label="Description"
                     type="text"
                     variant="standard"
                     value={description}
                     sx={{
-                        marginBottom: ".5em",
+                        width: "20vw",
+                        marginRight: '1vw',
                     }}
                     onChange={(e) => setDescription(e.target.value)}
                 />
@@ -66,13 +80,18 @@ const CreateMeasurement: React.FC<CreateMeasurementProps> = (props) => {
                     label="Initials"
                     type="text"
                     variant="standard"
+                    sx={{
+                        width: '5vw',
+                    }}
                     onKeyDown={(e) => handleKeydown(e, handleSubmit)}
                     value={initials}
                     onChange={(e) => setInitials(e.target.value)}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => props.setCreateMeasurementOpen('close')}>Cancel</Button>
+                <Button onClick={() => props.setCreateMeasurementOpen("close")}>
+                    Cancel
+                </Button>
                 <Button onClick={handleSubmit}>Create</Button>
             </DialogActions>
         </Dialog>
