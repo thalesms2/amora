@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 
-import api from "../lib/api";
-import promiseResults from "../lib/toastPromiseDefault";
-import { handleKeydown } from "../lib/formHooks";
+import api from "../hooks/api";
+import promiseResults from "../hooks/toastPromiseDefault";
+import { handleKeydown } from "../hooks/formHooks";
 
 interface LoginProps {
     open: String;

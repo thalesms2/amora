@@ -18,7 +18,7 @@ import {
     Autocomplete,
     Button,
 } from "@mui/material";
-import api from "../../../lib/api";
+import api from "../../../hooks/api";
 
 const CreateClient: React.FC = () => {
     const [id, setId] = React.useState<number>(null);

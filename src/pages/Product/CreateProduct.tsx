@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 
-import { usePopup } from "../../lib/usePopup";
-import api from "../../lib/api";
+import { usePopup } from "../../hooks/usePopup";
+import api from "../../hooks/api";
 
 const CreateBrand = lazy(() => import("../../components/CreateBrand"))
 const CreateGroup = lazy(() => import("../../components/CreateGroup"))

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, TextField, Button } from "@mui/material";
 import { toast } from "react-toastify";
 
-import api from "../../lib/api";
+import api from "../../hooks/api";
 
 const CreateSellers: React.FC = () => {
     const [id, setId] = React.useState("");

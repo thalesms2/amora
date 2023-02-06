@@ -16,9 +16,9 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { toast } from "react-toastify";
-import api from "../lib/api";
-import { handleKeydown } from "../lib/formHooks";
-import promiseResults from "../lib/toastPromiseDefault";
+import api from "../hooks/api";
+import { handleKeydown } from "../hooks/formHooks";
+import promiseResults from "../hooks/toastPromiseDefault";
 
 interface SignProps {
     open: String;

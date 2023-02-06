@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import { toast } from "react-toastify";
 
-import api from '../lib/api'
-import { handleKeydown } from "../lib/formHooks";
+import api from '../hooks/api'
+import { handleKeydown } from "../hooks/formHooks";
 
 interface Todo {
     id: Number;

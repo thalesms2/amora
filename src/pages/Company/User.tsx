@@ -15,8 +15,8 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 import { toast } from "react-toastify";
 
-import api from "../../lib/api";
-import promiseResults from "../../lib/toastPromiseDefault";
+import api from "../../hooks/api";
+import promiseResults from "../../hooks/toastPromiseDefault";
 
 const EditUser = lazy(() => import("../../components/EditUser"))
 
