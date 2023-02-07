@@ -1,12 +1,5 @@
 // {
-//     name: String(name),
-//     cpf: String(cpf),
-//     cityId: Number(cityId),
-//     adress: String(adress),
-//     neighborhood: String(neighborhood),
-//     cep: String(cep),
-//     birth: birth,
-//     priceTable: Number(priceTable),
+//     
 // }
 
 import React from "react";
@@ -20,6 +13,8 @@ import {
 } from "@mui/material";
 import api from "../../../hooks/api";
 import { toast } from "react-toastify";
+
+import promiseResults from '../../../hooks/toastPromiseDefault'
 
 interface City {
     code: number;
@@ -84,6 +79,38 @@ const CreateClient: React.FC = () => {
         getCitys();
     }, []);
 
+    async function handleSubmit() {
+        try {
+            await toast.promise(api.post("/client", {
+                id: Number(id),
+                name: String(name),
+                cpf: String(cpf),
+                cityCode: Number(cityCode),
+                cep: String(cep),
+                neighborhood: String(neighborhood),
+                street: String(street),
+                adressNumber: String(number),
+                complement: String(complement),
+                userId: window.sessionStorage.getItem('userId')
+            }), promiseResults)
+            toast('Client created 🥳')
+            handleClear()
+        } catch (err) {
+            toast('Error 😦')
+        }
+    }
+    function handleClear() {
+        setId('')
+        setName('')
+        setCpf('')
+        setCityCode(null)
+        setStateCode(null)
+        setCep('')
+        setNeighborhood('')
+        setStreet('')
+        setNumber('')
+        setComplement('')
+    }
     return (
         <Box
             sx={{
@@ -115,7 +142,7 @@ const CreateClient: React.FC = () => {
                         sx={{
                             marginBottom: "1vw",
                             marginRight: "1vw",
-                            width: "5vw",
+                            width: "6.5vw",
                         }}
                     />
                     <TextField
@@ -261,13 +288,14 @@ const CreateClient: React.FC = () => {
                     <Button
                         variant="outlined"
                         size="large"
+                        onClick={handleClear}
                         sx={{
                             marginRight: ".5em",
                         }}
                     >
                         Clear
                     </Button>
-                    <Button variant="contained" size="large">
+                    <Button variant="contained" size="large" onClick={handleSubmit}>
                         Submit
                     </Button>
                 </Box>

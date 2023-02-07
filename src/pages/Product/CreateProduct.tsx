@@ -46,6 +46,7 @@ const ButtonStyle = (position?: String) =>{
 } 
 
 const CreateProduct: React.FC = () => {
+    const [id, setId] = React.useState('')
     const [brands, setBrands] = React.useState<Brand[]>([]);
     const [groups, setGroups] = React.useState<Group[]>([]);
     const [measurements, setMeasurements] = React.useState<Measurement[]>([]);
@@ -119,6 +120,7 @@ const CreateProduct: React.FC = () => {
     const handleSubmit = async () => {
         try{
             const response = await api.post("/product", {
+                id: id,
                 description: description,
                 cost: cost,
                 profit: profit,
@@ -126,6 +128,7 @@ const CreateProduct: React.FC = () => {
                 brandId: brandId,
                 groupId: groupId,
                 measurementId: measurementId,
+                userId: window.sessionStorage.getItem('userId')
             });    
             toast('Product created 🥳')
         } catch (err) {
@@ -133,6 +136,7 @@ const CreateProduct: React.FC = () => {
         }
     };
     const handleClear = async () => {
+        setId('')
         setDescription('')
         setCost('')
         setProfit('')

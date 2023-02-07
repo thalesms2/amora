@@ -21,14 +21,13 @@ const App: React.FC = () => {
             <Box
                 sx={{
                     display: "flex",
-                    justifyContent: "flex-end",
+                    justifyContent: "space-between",
                 }}
             >
                 <Typography 
                     variant="h3"
                     sx={{
                         marginBotton: '.5em',
-                        alignSelf: "flex-start",
                     }}
                 >SisVendas</Typography>
                 <Todo />
