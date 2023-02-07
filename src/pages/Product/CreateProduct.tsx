@@ -60,7 +60,6 @@ const CreateProduct: React.FC = () => {
     const [brandId, setBrandId] = React.useState<Number>(null);
     const [groupId, setGroupId] = React.useState<Number>(null);
     const [measurementId, setMeasurementId] = React.useState<Number>(null);
-    // const [create, setCreate] = React.useState<"brand" | "group" | "measurement" |"closed">('closed')
     const [create, setCreate] = usePopup();
     async function getBrands() {
         try {

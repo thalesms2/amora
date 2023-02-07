@@ -12,9 +12,15 @@ import {
     Button,
 } from "@mui/material";
 import api from "../../../hooks/api";
+import cepApi from "../../../hooks/consultCep";
 import { toast } from "react-toastify";
 
+import { usePopup } from "../../../hooks/usePopup";
 import promiseResults from '../../../hooks/toastPromiseDefault'
+
+
+const CreateCity = React.lazy(() => import("../../../components/CreateCity"));
+const CreateState = React.lazy(() => import("../../../components/CreateState"));
 
 interface City {
     code: number;
@@ -38,13 +44,23 @@ const CreateClient: React.FC = () => {
     const [cityValue, setCityValue] = React.useState("");
     const [cityCode, setCityCode] = React.useState<Number>(null);
     const [stateValue, setStateValue] = React.useState("");
-    const [stateCode, setStateCode] = React.useState<Number>(null);
+    const [stateCode, setStateCode] = React.useState<String>('');
     const [citys, setCitys] = React.useState<City[]>([]);
     const [states, setStates] = React.useState<State[]>([]);
+    const [create, setCreate] = usePopup();
 
-    async function getCitys() {
+    const numRef = React.useRef(null)
+
+    function checkPress(e) {
+        if(e.keyCode == 13 || e.keyCode == 9) {
+            e.preventDefault()
+            numRef.current.focus()
+        }
+    }
+
+    async function getCitys(stateCode) {
         try {
-            const { data } = await api.get("/city");
+            const { data } = await api.get(`/city/all/${stateCode}`);
             const res: any = [];
             data.map((city: City) => {
                 res.push({
@@ -53,6 +69,7 @@ const CreateClient: React.FC = () => {
                     content: city.code,
                 });
             });
+            toast("Got the citys 🥳");
             setCitys(res);
         } catch (err) {
             toast("Error to get citys 😦");
@@ -69,6 +86,7 @@ const CreateClient: React.FC = () => {
                     content: state.code,
                 });
             });
+            toast("Got the states 🥳");
             setStates(res);
         } catch (err) {
             toast("Error to get states 😦");
@@ -76,8 +94,28 @@ const CreateClient: React.FC = () => {
     }
     React.useEffect(() => {
         getStates();
-        getCitys();
     }, []);
+    async function selectedStateUpdateCitys(state) {
+        setStateCode(state.content);
+        setStateValue(state.label);
+        getCitys(state.content)
+    }
+    async function handleCaptureCep() {
+        const { data } = await toast.promise(cepApi.get(`/${cep}/json`), promiseResults)
+        setStateCode(data.uf);
+        const searchStateLabel = states.map((state: any) => {
+            if (state.content == data.uf) return state.label
+        })
+        selectedStateUpdateCitys({content: 'SC' , label: 'Santa Catarina'})
+        setStateValue(String(searchStateLabel));
+        setCityValue(data.localidade)
+        const searchCityCode = citys.map((city:any) => {
+            if(city.label == data.localidade) return city.content
+        })
+        setCityCode(Number(searchCityCode));
+        setNeighborhood(data.bairro)
+        setStreet(data.logradouro)
+    }
 
     async function handleSubmit() {
         try {
@@ -104,7 +142,9 @@ const CreateClient: React.FC = () => {
         setName('')
         setCpf('')
         setCityCode(null)
+        setCityValue('')
         setStateCode(null)
+        setStateValue('')
         setCep('')
         setNeighborhood('')
         setStreet('')
@@ -120,6 +160,8 @@ const CreateClient: React.FC = () => {
                 alignContent: "center",
             }}
         >
+            {create === 'city' ? <CreateCity getCitys={getCitys} open={create} setCreateCityOpen={setCreate} stateCode={stateCode} />: null}
+            {create === 'state' ? <CreateState getStates={getStates} open={create} setCreateStateOpen={setCreate} />: null}
             <Typography variant="h3">Create a new Client</Typography>
             <Paper
                 elevation={6}
@@ -142,13 +184,13 @@ const CreateClient: React.FC = () => {
                         sx={{
                             marginBottom: "1vw",
                             marginRight: "1vw",
-                            width: "6.5vw",
+                            width: "5vw",
                         }}
                     />
                     <TextField
                         label="Name"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setCep(String(e.target.value))}
                         variant="standard"
                         sx={{
                             marginBottom: "1vw",
@@ -176,8 +218,10 @@ const CreateClient: React.FC = () => {
                     <TextField
                         value={cep}
                         onChange={(e) => setCep(e.target.value)}
+                        onKeyDown={(e) => checkPress(e)}
                         label="CEP"
                         variant="standard"
+                        onBlur={(e) => handleCaptureCep()}
                         sx={{
                             marginBottom: "1vw",
                             marginRight: "1vw",
@@ -198,8 +242,7 @@ const CreateClient: React.FC = () => {
                             marginRight: "1vw",
                         }}
                         onChange={(event: any, state: any) => {
-                            setStateCode(state.content);
-                            setStateValue(state.label);
+                            selectedStateUpdateCitys(state)
                         }}
                         renderInput={(params) => (
                             <TextField
@@ -262,6 +305,7 @@ const CreateClient: React.FC = () => {
                         value={number}
                         onChange={(e) => setNumber(e.target.value)}
                         label="Number"
+                        inputRef={numRef}
                         variant="standard"
                         sx={{
                             marginBottom: "1vw",
