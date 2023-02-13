@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-import { toast } from 'react-toastify';
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
-import api from './api';
-import promiseResults from './toastPromiseDefault';
+import api from "./api";
+import promiseResults from "./toastPromiseDefault";
 
-import { Product } from '../types/types';
+import { Product } from "../types/types";
 
 export default function useProducts() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -12,13 +12,15 @@ export default function useProducts() {
         async function getProducts() {
             try {
                 const { data } = await toast.promise(
-                    api.get("/product"), promiseResults) 
+                    api.get("/product"),
+                    promiseResults
+                );
                 setProducts(data);
             } catch (err) {
-                alert("Ocorreu um erro ao buscar os produtos");
+                alert("Err");
             }
         }
         getProducts();
     }, []);
-    return products
+    return products;
 }

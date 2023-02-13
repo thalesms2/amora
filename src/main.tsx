@@ -19,6 +19,7 @@ const ConsultClients = lazy(() => import("./pages/Sell/Client/ConsultClients"));
 const CreateSellers = lazy(() => import("./pages/Company/CreateSellers"));
 const CreateDeposit = lazy(() => import("./pages/Storage/CreateDeposit"));
 const CreateProvider = lazy(() => import("./pages/Company/CreateProvider"));
+const CreateEntry = lazy(() => import("./pages/Storage/CreateEntry"));
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 <Route index element={<Home />} />
                 <Route path="/storage" element={<Storage />} />
                 <Route path="/storage/create" element={<CreateDeposit />} />
+                <Route path="/storage/entry/create" element={<CreateEntry />} />
                 <Route path="/product" element={<ConsultProducts />} />
                 <Route path="/product/create" element={<CreateProduct />} />
                 <Route path="/sell" element={<Sell />} />
@@ -46,7 +48,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 />
                 <Route
                     path="/company/seller/create"
-                    element={<CreateSellers />}
+                    element={<CreateSellers open="seller" />}
                 />
                 <Route path="/company/log" element={<Log />} />
                 <Route path="/config/clear" element={<Clear />} />

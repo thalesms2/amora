@@ -1,13 +1,20 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from "@mui/material";
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    TextField,
+    Button,
+} from "@mui/material";
 import { toast } from "react-toastify";
 
 import api from "../../hooks/api";
 
 interface CreateSellersProps {
     open: String;
-    setCreateSellerOpen: Dispatch<SetStateAction<string>>;
-    getSellers: () => void;
+    setCreateSellerOpen?: Dispatch<SetStateAction<string>>;
+    getSellers?: () => void;
 }
 
 export default function CreateSellers(props: CreateSellersProps) {
@@ -30,13 +37,10 @@ export default function CreateSellers(props: CreateSellersProps) {
         }
     };
     return (
-        <Dialog 
-        open={open} 
-        onClose={() => props.setCreateSellerOpen('close')}
-    >
-        <DialogTitle>Create a New Seller</DialogTitle>
-        <DialogContent>
-        <TextField
+        <Dialog open={open} onClose={() => props.setCreateSellerOpen("close")}>
+            <DialogTitle>Create a New Seller</DialogTitle>
+            <DialogContent>
+                <TextField
                     autoFocus
                     margin="dense"
                     variant="standard"
@@ -70,11 +74,13 @@ export default function CreateSellers(props: CreateSellersProps) {
                         setComission(String(e.target.value));
                     }}
                 />
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={() => props.setCreateSellerOpen('close')}>Cancel</Button>
-            <Button onClick={handleSubmit}>Create</Button>
-        </DialogActions>
-    </Dialog>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => props.setCreateSellerOpen("close")}>
+                    Cancel
+                </Button>
+                <Button onClick={handleSubmit}>Create</Button>
+            </DialogActions>
+        </Dialog>
     );
-};
+}

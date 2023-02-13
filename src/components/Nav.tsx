@@ -54,6 +54,11 @@ const Nav = () => {
             >
                 <NavItemCell
                     setStatus={setStorage}
+                    to="/storage/entry/create"
+                    title="Create a entry"
+                />
+                <NavItemCell
+                    setStatus={setStorage}
                     to="/storage/create"
                     title="Create a deposit"
                 />
