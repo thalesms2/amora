@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 
 const Home = lazy(() => import("./pages/Home"));
 const Storage = lazy(() => import("./pages/Storage/Storage"));
-const Product = lazy(() => import("./pages/Product/Product"));
+const ConsultProducts = lazy(() => import("./pages/Product/ConsultProducts"));
 const Sell = lazy(() => import("./pages/Sell/Sell"));
 const Company = lazy(() => import("./pages/Company/Company"));
 const Clear = lazy(() => import("./pages/Config/Clear"));
@@ -15,7 +15,7 @@ const CreateClient = lazy(() => import("./pages/Sell/Client/CreateClient"));
 const Log = lazy(() => import("./pages/Company/Log"));
 const User = lazy(() => import("./pages/Company/User"));
 const Shop = lazy(() => import("./pages/Sell/Shop"));
-const Client = lazy(() => import("./pages/Sell/Client/Client"));
+const ConsultClients = lazy(() => import("./pages/Sell/Client/ConsultClients"));
 const CreateSellers = lazy(() => import("./pages/Company/CreateSellers"));
 const CreateDeposit = lazy(() => import("./pages/Storage/CreateDeposit"));
 const CreateProvider = lazy(() => import("./pages/Company/CreateProvider"));
@@ -32,11 +32,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                 <Route index element={<Home />} />
                 <Route path="/storage" element={<Storage />} />
                 <Route path="/storage/create" element={<CreateDeposit />} />
-                <Route path="/product" element={<Product />} />
+                <Route path="/product" element={<ConsultProducts />} />
                 <Route path="/product/create" element={<CreateProduct />} />
                 <Route path="/sell" element={<Sell />} />
                 <Route path="/shop" element={<Shop />} />
-                <Route path="/shop/client" element={<Client />} />
+                <Route path="/shop/client" element={<ConsultClients />} />
                 <Route path="/shop/client/create" element={<CreateClient />} />
                 <Route path="/company" element={<Company />} />
                 <Route path="/company/user" element={<User />} />
