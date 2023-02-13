@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, Dispatch, SetStateAction, SyntheticEvent } from "react";
 import {
     TextField,
     Button,
@@ -15,17 +15,17 @@ import { handleKeydown } from "../hooks/formHooks";
 
 interface EditUserProps {
     open: String;
-    setEdit: React.Dispatch<React.SetStateAction<string>>;
+    setEdit: Dispatch<SetStateAction<string>>;
     id: Number;
     getAllUsers: () => void
 }
 
-const EditUser: React.FC<EditUserProps> = (props) => {
-    const [name, setName] = React.useState<String>(null);
-    const [password, setPassword] = React.useState<String>(null);
+export default function EditUser(props: EditUserProps) {
+    const [name, setName] = useState<String>(null);
+    const [password, setPassword] = useState<String>(null);
     const open = props.open == "open";
 
-    const handleSubmit = async (e: React.SyntheticEvent) => {
+    const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
         try{
             const response = await toast.promise(
@@ -83,5 +83,3 @@ const EditUser: React.FC<EditUserProps> = (props) => {
         </Dialog>
     );
 };
-
-export default EditUser;

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import {
     TextField,
     Button,
@@ -15,14 +15,14 @@ import { handleKeydown } from "../hooks/formHooks";
 
 interface CreateGroupProps {
     open: String;
-    setCreateGroupOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateGroupOpen: Dispatch<SetStateAction<string>>;
     getGroups: () => void;
 }
 
-const CreateGroup: React.FC<CreateGroupProps> = (props) => {
+export default function CreateGroup(props: CreateGroupProps) {
     const open = props.open == "group";
-    const [id, setId] = React.useState('')
-    const [description, setDescription] = React.useState('')
+    const [id, setId] = useState('')
+    const [description, setDescription] = useState('')
 
     const handleSubmit = async () => {
         try {
@@ -78,5 +78,3 @@ const CreateGroup: React.FC<CreateGroupProps> = (props) => {
         </Dialog>
     );
 };
-
-export default CreateGroup;

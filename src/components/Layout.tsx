@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense, createContext, useState, useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import { Global, css } from "@emotion/react";
 import { Button, Typography, Box, Paper, Tooltip, useMediaQuery } from "@mui/material";
@@ -14,11 +14,11 @@ import ThemeButton from "./ThemeButton";
 const Login = lazy(() => import("./Login"));
 const Sign = lazy(() => import("./Sign"));
 
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
-const Layout: React.FC = () => {
+export default function Layout() {
     const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-    const [mode, setMode] = React.useState<"light" | "dark">(() => {
+    const [mode, setMode] = useState<"light" | "dark">(() => {
         if (localStorage.theme === "dark" || localStorage.theme === "light") {
             return localStorage.theme;
         }
@@ -26,7 +26,7 @@ const Layout: React.FC = () => {
         localStorage.setItem("theme", theme);
         return theme;
     });
-    const colorMode = React.useMemo(
+    const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
                 setMode((prevMode) => {
@@ -38,7 +38,7 @@ const Layout: React.FC = () => {
         }),
         []
     );
-    const theme = React.useMemo(
+    const theme = useMemo(
         () =>
             createTheme({
                 palette: {
@@ -159,5 +159,3 @@ const Layout: React.FC = () => {
         </ColorModeContext.Provider>
     );
 };
-
-export default Layout;

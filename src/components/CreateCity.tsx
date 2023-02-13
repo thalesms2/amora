@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import {
     TextField,
     Button,
@@ -15,15 +15,15 @@ import { handleKeydown } from "../hooks/formHooks";
 
 interface CreateCityProps {
     open: String;
-    setCreateCityOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateCityOpen: Dispatch<SetStateAction<string>>;
     getCitys: (stateCode: any) => Promise<void>;
     stateCode: String
 }
 
-const CreateCity: React.FC<CreateCityProps> = (props) => {
+export default function CreateCity(props: CreateCityProps) {
     const open = props.open == "city";
-    const [id, setId] = React.useState('')
-    const [description, setDescription] = React.useState('')
+    const [id, setId] = useState('')
+    const [description, setDescription] = useState('')
 
     const handleSubmit = async () => {
         try {
@@ -79,5 +79,3 @@ const CreateCity: React.FC<CreateCityProps> = (props) => {
         </Dialog>
     );
 };
-
-export default CreateCity;

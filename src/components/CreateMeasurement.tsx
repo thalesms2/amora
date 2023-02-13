@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, SetStateAction, Dispatch } from "react";
 import {
     TextField,
     Button,
@@ -16,15 +16,15 @@ import { handleKeydown } from "../hooks/formHooks";
 
 interface CreateMeasurementProps {
     open: String;
-    setCreateMeasurementOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateMeasurementOpen: Dispatch<SetStateAction<string>>;
     getMeasurements: () => void;
 }
 
-const CreateMeasurement: React.FC<CreateMeasurementProps> = (props) => {
+export default function CreateMeasurement(props: CreateMeasurementProps) {
     const open = props.open == "measurement";
-    const [id, setId] = React.useState("");
-    const [description, setDescription] = React.useState("");
-    const [initials, setInitials] = React.useState("");
+    const [id, setId] = useState("");
+    const [description, setDescription] = useState("");
+    const [initials, setInitials] = useState("");
 
     const handleSubmit = async () => {
         try {
@@ -97,5 +97,3 @@ const CreateMeasurement: React.FC<CreateMeasurementProps> = (props) => {
         </Dialog>
     );
 };
-
-export default CreateMeasurement;

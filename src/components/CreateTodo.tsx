@@ -1,4 +1,4 @@
-import React from "react";
+import { Dispatch, SetStateAction } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -21,11 +21,11 @@ interface Todo {
 
 interface CreateTodoProps {
     open: String;
-    // setTasks: React.Dispatch<React.SetStateAction<Todo[]>>
-    setOpen: React.Dispatch<'create' | 'edit' | 'closed'>
+    // setTasks: React.Dispatch<SetStateAction<Todo[]>>
+    setOpen: Dispatch<'create' | 'edit' | 'closed'>
 }
 
-const CreateTodo: React.FC<CreateTodoProps> = (props) => {
+export default function CreateTodo(props: CreateTodoProps) {
     const open = false;
     
     const handleClose = () => {
@@ -51,5 +51,3 @@ const CreateTodo: React.FC<CreateTodoProps> = (props) => {
         </Dialog>
     );
 };
-
-export default CreateTodo;

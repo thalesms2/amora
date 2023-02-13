@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import {
     TextField,
     Button,
@@ -15,14 +15,14 @@ import { handleKeydown } from "../hooks/formHooks";
 
 interface CreateBrandProps {
     open: String;
-    setCreateBrandOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateBrandOpen: Dispatch<SetStateAction<string>>;
     getBrands: () => void;
 }
 
-const CreateBrand: React.FC<CreateBrandProps> = (props) => {
+export default function CreateBrand(props: CreateBrandProps) {
     const open = props.open == "brand";
-    const [id, setId] = React.useState('')
-    const [description, setDescription] = React.useState('')
+    const [id, setId] = useState('')
+    const [description, setDescription] = useState('')
 
     const handleSubmit = async () => {
         try {
@@ -78,5 +78,3 @@ const CreateBrand: React.FC<CreateBrandProps> = (props) => {
         </Dialog>
     );
 };
-
-export default CreateBrand;

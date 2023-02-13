@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import {
     TextField,
     Button,
@@ -15,14 +15,14 @@ import { handleKeydown } from "../hooks/formHooks";
 
 interface CreateStateProps {
     open: String;
-    setCreateStateOpen: React.Dispatch<React.SetStateAction<string>>;
+    setCreateStateOpen: Dispatch<SetStateAction<string>>;
     getStates: () => void;
 }
 
-const CreateState: React.FC<CreateStateProps> = (props) => {
+export default function CreateState(props: CreateStateProps) {
     const open = props.open == "state";
-    const [id, setId] = React.useState('')
-    const [description, setDescription] = React.useState('')
+    const [id, setId] = useState('')
+    const [description, setDescription] = useState('')
 
     const handleSubmit = async () => {
         try {
@@ -78,5 +78,3 @@ const CreateState: React.FC<CreateStateProps> = (props) => {
         </Dialog>
     );
 };
-
-export default CreateState;

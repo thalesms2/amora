@@ -47,22 +47,24 @@ const CreateProvider: React.FC = () => {
 
     async function handleSubmit() {
         try {
-            await toast.promise(api.post("/provider/create", {
+            await toast.promise(api.post("/provider", {
                 id: Number(id),
                 socialName: String(socialName),
                 fantasyName: String(fantasy),
                 cnpj: String(cnpj),
-                cityCode: Number(cityCode),
+                ie: String(ie),
                 cep: String(cep),
-                neighborhood: String(neighborhood),
+                cityCode: Number(cityCode),
                 street: String(street),
                 adressNumber: String(number),
+                neighborhood: String(neighborhood),
                 complement: String(complement),
                 userId: window.sessionStorage.getItem('userId')
             }), promiseResults)
-            toast('Client created 🥳')
+            toast('Provider created 🥳')
             handleClear()
         } catch (err) {
+            console.log(err)
             toast('Error 😦')
         }
     }
@@ -236,7 +238,7 @@ const CreateProvider: React.FC = () => {
                 </Box>
                 <Box
                     sx={{
-                        display: "display",
+                        display: "flex",
                     }}
                 >
                     <TextField 
@@ -308,19 +310,7 @@ const CreateProvider: React.FC = () => {
                         onChange={(e) => setStreet(e.target.value)}
                         sx={{
                             marginBottom: "1vw",
-                            marginRight: "1vw",
-                            width: "20vw"
-                        }}
-                    />
-                    <TextField 
-                        label="Number"
-                        value={number}
-                        variant="standard"
-                        inputRef={numRef}
-                        onChange={(e) => setNumber(e.target.value)}
-                        sx={{
-                            marginBottom: "1vw",
-                            width: "5vw",
+                            width: "14vw"
                         }}
                     />
                 </Box>
@@ -337,7 +327,19 @@ const CreateProvider: React.FC = () => {
                         sx={{
                             marginBottom: "1vw",
                             marginRight: "1vw",
-                            width: "41vw"
+                            width: "25vw"
+                        }}
+                    />
+                    <TextField 
+                        label="Number"
+                        value={number}
+                        variant="standard"
+                        inputRef={numRef}
+                        onChange={(e) => setNumber(e.target.value)}
+                        sx={{
+                            marginBottom: "1vw",
+                            marginRight: "1vw",
+                            width: "5vw",
                         }}
                     />
                     <TextField 
